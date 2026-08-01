@@ -33,4 +33,12 @@ EOF
 
 ## License
 
-MIT
+MIT. do whatever you want with these.
+
+made by @BChopLXXXII
+
+built for vibe coders who just want their AI to feel less... corporate.
+
+ship it. 🚀
+
+if this helped, ⭐ the repo — it helps others find it.
