@@ -1,0 +1,6 @@
+# Local-only media / private assets (do not commit)
+assets/
+
+# Windows download metadata junk
+*:Zone.Identifier
+*.Zone.Identifier
