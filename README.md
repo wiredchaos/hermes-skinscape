@@ -33,12 +33,12 @@ EOF
 
 ## License
 
-MIT. do whatever you want with these.
+MIT. Do whatever you want with these.
 
-made by @BChopLXXXII
+Made by @BChopLXXXII
 
-built for vibe coders who just want their AI to feel less... corporate.
+Built for vibe coders who just want their AI to feel less... corporate.
 
-ship it. 🚀
+Ship it. 🚀
 
-if this helped, ⭐ the repo — it helps others find it.
+If this helped, ⭐ the repo — it helps others find it.
