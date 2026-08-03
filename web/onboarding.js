@@ -33,9 +33,11 @@ const state = { index: 0, activeTarget: null };
 const ui = {
   openQuickStart: byId('openQuickStart'),
   openExplainer: byId('openExplainer'),
+  openExplainerInline: byId('openExplainerInline'),
   floatingHelp: byId('floatingHelp'),
   startTour: byId('startTour'),
   startTourSecondary: byId('startTourSecondary'),
+  startTourDialog: byId('startTourDialog'),
   explainerDialog: byId('explainerDialog'),
   explainerTitle: byId('explainerTitle'),
   gammaFrame: byId('gammaFrame'),
@@ -156,8 +158,13 @@ function showQuickStart() {
 ui.openQuickStart?.addEventListener('click', showQuickStart);
 ui.floatingHelp?.addEventListener('click', showQuickStart);
 ui.openExplainer?.addEventListener('click', openExplainer);
+ui.openExplainerInline?.addEventListener('click', openExplainer);
 ui.startTour?.addEventListener('click', () => startTour(0));
 ui.startTourSecondary?.addEventListener('click', () => startTour(0));
+ui.startTourDialog?.addEventListener('click', () => {
+  closeDialog(ui.explainerDialog);
+  startTour(0);
+});
 ui.closeExplainer?.addEventListener('click', () => closeDialog(ui.explainerDialog));
 ui.tourPrevious?.addEventListener('click', previousTourStep);
 ui.tourNext?.addEventListener('click', nextTourStep);
