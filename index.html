@@ -3,25 +3,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Turn the original 50 Hermes skins into rotating terminal worlds and generate a branded ASCII identity from an image or URL.">
+  <meta name="description" content="Turn the original 50 Hermes skins into rotating Agentropolis terminal worlds and generate a branded ASCII identity from an image or URL.">
   <title>Hermes Skinscape</title>
   <link rel="stylesheet" href="./web/styles.css">
 </head>
 <body>
+  <div class="city-stage" aria-hidden="true">
+    <canvas id="agentropolisCanvas"></canvas>
+    <div id="cityFallback" class="city-fallback" hidden>
+      <div class="fallback-grid"></div>
+    </div>
+    <div class="city-vignette"></div>
+  </div>
+
   <header class="site-header">
     <div>
-      <p class="eyebrow">COMMUNITY IDENTITY FORGE</p>
+      <p class="eyebrow">AGENTROPOLIS · HERMES CITY</p>
       <h1>Hermes Skinscape</h1>
-      <p>Your identity. Fifty worlds. One Hermes terminal.</p>
+      <p>Your identity. Fifty worlds. One living terminal city.</p>
     </div>
-    <a href="https://github.com/wiredchaos/hermes-skinscape">GitHub repository</a>
+    <div class="header-actions">
+      <a href="https://github.com/wiredchaos/hermes-skinscape">GitHub repository</a>
+      <div class="city-controls" aria-label="3D city controls">
+        <label>
+          City quality
+          <select id="cityQuality">
+            <option value="auto">Auto</option>
+            <option value="cinematic">Cinematic</option>
+            <option value="balanced">Balanced</option>
+            <option value="low">Low power</option>
+          </select>
+        </label>
+        <label class="city-switch">
+          <input id="cityMotion" type="checkbox" checked>
+          Motion
+        </label>
+      </div>
+      <output id="cityStatus" class="city-status" aria-live="polite">City offline</output>
+    </div>
   </header>
 
   <main>
-    <section class="controls" aria-labelledby="build-title">
+    <section class="city-intro" aria-labelledby="city-title">
+      <div>
+        <p class="eyebrow">THE INTELLIGENCE GRID</p>
+        <h2 id="city-title">A terminal identity inside a living agent city.</h2>
+      </div>
+      <div class="city-metrics" aria-label="Agentropolis city status">
+        <span><strong>50</strong> world skins</span>
+        <span><strong>1</strong> persistent identity</span>
+        <span><strong>LOCAL</strong> image processing</span>
+      </div>
+    </section>
+
+    <section class="controls glass-panel" aria-labelledby="build-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">BUILD</p>
+          <p class="eyebrow">IDENTITY FORGE</p>
           <h2 id="build-title">Create your terminal identity</h2>
         </div>
         <output id="status" aria-live="polite">Starting...</output>
@@ -69,7 +107,7 @@
         <p class="terminal-logo">HERMES<br>SKINSCAPE</p>
         <div>
           <h2 id="terminalBrand">HERMES IDENTITY</h2>
-          <p>50 SKINS · ASCII IDENTITY · LOCAL-FIRST PREVIEW</p>
+          <p>50 SKINS · ASCII IDENTITY · AGENTROPOLIS CITY GRID</p>
         </div>
       </div>
       <div class="terminal-content">
@@ -80,23 +118,23 @@ OR PASTE AN HTTPS URL
 TO GENERATE YOUR ASCII IDENTITY.</pre>
         </div>
         <div class="telemetry">
-          <p><strong>Hermes Agent</strong> community preview</p>
-          <p class="accent">▾ Available Tools</p>
-          <p>file · terminal · browser · memory · delegation</p>
+          <p><strong>Hermes Agent</strong> city terminal</p>
+          <p class="accent">▾ Grid Status</p>
+          <p>Identity forge online · city renderer active · themes synchronized</p>
           <p class="accent">▸ Available Skills</p>
-          <p>Identity forge · skin rotation · profile export</p>
+          <p>Identity forge · skin rotation · profile export · city projection</p>
           <p class="accent">▸ MCP Servers</p>
           <p>Connection status remains owned by the local Hermes runtime.</p>
-          <p class="signal">NO LOCKED BRAND. USER CONTROLS IDENTITY.</p>
+          <p class="signal">THEMES CONTROL THE WORLD. PROFILE CONTROLS THE IDENTITY.</p>
         </div>
       </div>
     </section>
 
-    <section class="screensaver" aria-labelledby="screensaver-title">
+    <section class="screensaver glass-panel" aria-labelledby="screensaver-title">
       <div>
-        <p class="eyebrow">ROTATE</p>
+        <p class="eyebrow">CITY ROTATION</p>
         <h2 id="screensaver-title">All 50 worlds</h2>
-        <p>The scene changes. Your identity stays recognizable.</p>
+        <p>The city changes atmosphere. Your identity stays recognizable.</p>
       </div>
       <div class="transport">
         <button id="previous" type="button">Previous</button>
@@ -107,7 +145,7 @@ TO GENERATE YOUR ASCII IDENTITY.</pre>
       </div>
     </section>
 
-    <section class="export-panel" aria-labelledby="export-title">
+    <section class="export-panel glass-panel" aria-labelledby="export-title">
       <div>
         <p class="eyebrow">EXPORT</p>
         <h2 id="export-title">Keep what you make</h2>
@@ -121,8 +159,9 @@ TO GENERATE YOUR ASCII IDENTITY.</pre>
   </main>
 
   <footer>
-    Original 50-skin collection by BChopLXXXII. Hermes Skinscape preserves upstream attribution and remains brand-neutral for the community.
+    Original 50-skin collection by BChopLXXXII. Hermes Skinscape preserves upstream attribution. Agentropolis provides the optional city presentation layer.
   </footer>
   <script type="module" src="./web/app.js"></script>
+  <script type="module" src="./web/3d/bootstrap.js"></script>
 </body>
 </html>
