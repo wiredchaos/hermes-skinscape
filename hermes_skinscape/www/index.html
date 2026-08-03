@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hermes Skinscape Bridge</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0d0a32;--panel:#120e3e;--line:#ff526e;--text:#fbfaff;--muted:#bdb7d3;--good:#79f0b2}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0,#1c1457,var(--bg) 46%);color:var(--text);font-family:Inter,system-ui,sans-serif}
+    main{width:min(960px,calc(100% - 1.25rem));margin:0 auto;padding:1rem 0 4rem}
+    header,.card{border:1px solid rgba(255,82,110,.38);border-radius:1rem;background:rgba(10,7,36,.9);box-shadow:0 24px 70px rgba(0,0,0,.35)}
+    header{padding:1.2rem;margin-bottom:1rem}header p{margin:.25rem 0 0;color:var(--muted);line-height:1.5}h1,h2{margin:.2rem 0}.eyebrow{color:var(--line);font:800 .72rem/1 ui-monospace,monospace;letter-spacing:.16em}
+    .card{padding:1rem;margin-bottom:1rem}.upload{display:grid;gap:.8rem;padding:1rem;border:1px dashed rgba(255,82,110,.55);border-radius:.8rem;background:rgba(255,255,255,.025)}input[type=file]{width:100%}
+    button{min-height:3.6rem;border:0;border-radius:.35rem;background:linear-gradient(110deg,#ff2f68,#ff786b);color:#130b20;font-size:1rem;font-weight:900;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}
+    #status{min-height:1.5rem;color:var(--muted)}#status.good{color:var(--good)}#status.error{color:#ff899a}
+    .stage{position:relative;overflow:hidden;aspect-ratio:9/16;max-height:72vh;border:1px solid rgba(255,82,110,.35);border-radius:.8rem;background:#050315}video{width:100%;height:100%;object-fit:contain;background:#050315}.empty{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:var(--muted);padding:2rem}.empty strong{color:var(--line);font-size:clamp(1.5rem,6vw,3rem)}
+    .meta{display:flex;justify-content:space-between;gap:1rem;margin-top:.7rem;color:var(--muted);font:700 .7rem/1.4 ui-monospace,monospace}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">HOME ASSISTANT APP</p>
+    <h1>Hermes Skinscape Bridge</h1>
+    <p>Upload an exported animated ASCII WebM. The bridge saves it in persistent app storage and immediately makes it the active looping Home Assistant panel.</p>
+  </header>
+
+  <section class="card">
+    <div class="upload">
+      <label><strong>Choose exported ASCII WebM</strong><br><input id="file" type="file" accept="video/webm,.webm"></label>
+      <button id="publish" type="button" disabled>Publish to Home Assistant</button>
+      <output id="status" aria-live="polite">Checking bridge status…</output>
+    </div>
+  </section>
+
+  <section class="card">
+    <p class="eyebrow">ACTIVE PANEL</p>
+    <h2>NEURO Animated ASCII</h2>
+    <div class="stage">
+      <video id="player" autoplay muted loop playsinline preload="auto"></video>
+      <div id="empty" class="empty"><strong>NO MEDIA YET</strong><span>Publish a Skinscape WebM above.</span></div>
+    </div>
+    <div class="meta"><span>PERSISTENT APP STORAGE</span><span id="state">OFFLINE</span></div>
+  </section>
+</main>
+<script>
+  const file = document.getElementById('file');
+  const publish = document.getElementById('publish');
+  const status = document.getElementById('status');
+  const player = document.getElementById('player');
+  const empty = document.getElementById('empty');
+  const state = document.getElementById('state');
+
+  function setStatus(message, tone='') {
+    status.textContent = message;
+    status.className = tone;
+  }
+
+  function loadMedia(url) {
+    if (!url) return;
+    player.src = `${url}?v=${Date.now()}`;
+    player.hidden = false;
+    empty.hidden = true;
+    player.play().catch(() => setStatus('Published. Tap the video once if autoplay is blocked.', 'good'));
+  }
+
+  async function refresh() {
+    try {
+      const response = await fetch('api/status', { cache: 'no-store' });
+      const data = await response.json();
+      state.textContent = data.ready ? 'ONLINE' : 'OFFLINE';
+      if (data.has_media) {
+        loadMedia(data.media_url);
+        setStatus('Bridge online. Active media loaded.', 'good');
+      } else {
+        setStatus('Bridge online. Choose a WebM to publish.');
+      }
+    } catch {
+      state.textContent = 'OFFLINE';
+      setStatus('Bridge did not respond. Restart the app from Home Assistant.', 'error');
+    }
+  }
+
+  file.addEventListener('change', () => {
+    const selected = file.files && file.files[0];
+    publish.disabled = !selected;
+    if (selected) setStatus(`${selected.name} ready to publish.`);
+  });
+
+  publish.addEventListener('click', async () => {
+    const selected = file.files && file.files[0];
+    if (!selected) return;
+    publish.disabled = true;
+    setStatus('Publishing to Home Assistant…');
+    const form = new FormData();
+    form.append('media', selected, selected.name);
+    try {
+      const response = await fetch('api/upload', { method: 'POST', body: form });
+      const data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.error || 'Publish failed.');
+      setStatus(data.message, 'good');
+      loadMedia(data.media_url);
+      state.textContent = 'ONLINE';
+    } catch (error) {
+      setStatus(error.message || 'Publish failed.', 'error');
+    } finally {
+      publish.disabled = false;
+    }
+  });
+
+  refresh();
+</script>
+</body>
+</html>
