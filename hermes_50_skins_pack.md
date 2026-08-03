@@ -1,4 +1,4 @@
-# Hermes Subscriber Skins Pack — 50 Themes
+# Hermes Skins Pack — 50 Themes
 
 ## How to Install
 
@@ -2980,4 +2980,4 @@ tool_prefix: "┆"
 
 ---
 
-*Subscriber pack — 50 skins across 10 categories. Designed for Hermes CLI/TUI using the real skin engine keys.*
+*50 skins across 10 categories. Designed for Hermes CLI/TUI using the real skin engine keys.*

@@ -1,6 +1,4 @@
-# Hermes Skins Pack — 50 Subscriber Themes
-
-![Cover](hermes-cover.png)
+# Hermes Skins Pack — 50 Themes
 
 A curated pack of **50 unique, drop-in skin themes** for the [Hermes Agent](https://github.com/NousResearch/hermes-agent) CLI and TUI. Every skin is a complete YAML file using the real Hermes color keys — no inherited defaults, no silent fallbacks.
 
@@ -19,16 +17,16 @@ A curated pack of **50 unique, drop-in skin themes** for the [Hermes Agent](http
 | Fantasy / Gaming | dragon-blood, arcane-tome, shadow-thief, enchanted-forest, forge-master |
 | Abstract / Artistic | vaporwave-mall, brutalist-concrete, stained-glass, desert-neon, liquid-silver |
 
-## Install the Pack
+## Install
 
-Download and unzip the release, then run:
+Download or clone the repository, then copy the skins into Hermes:
 
 ```bash
-cd hermes-skins-pack
-./install.sh
+mkdir -p "${HERMES_HOME:-$HOME/.hermes}/skins"
+cp -i skins/*.yaml "${HERMES_HOME:-$HOME/.hermes}/skins/"
 ```
 
-The installer requires Python 3, which Hermes already uses. It copies all 50 YAML files into `${HERMES_HOME:-$HOME/.hermes}/skins/` and leaves any skin you already customized untouched.
+The `-i` flag asks before replacing any skin with the same filename.
 
 Switch skins inside Hermes with `/skin <name>`, or set one as the default:
 
@@ -43,35 +41,17 @@ mkdir -p ~/.hermes/skins
 cp skins/neon-ghost.yaml ~/.hermes/skins/
 ```
 
-## Package Contents
+## Repository Contents
 
 - `skins/`, 50 ready-to-use YAML skin files
-- `install.sh`, safe installer that preserves existing files
+- `README.md`, installation and skin list
+- `VERSION`, current pack version
 - `hermes_50_skins_pack.md`, browsable catalog with every full YAML block
-- `VERSION`, package version used in the ZIP filename
-- `LICENSE`, MIT license
 
 Every skin defines the complete current Hermes palette, including syntax colors and `shell_dollar`, so it does not silently inherit the default theme.
-
-## Build and Verify
-
-Development checks require [`uv`](https://docs.astral.sh/uv/). The package builder itself uses only Python's standard library.
-
-```bash
-make test
-make package
-```
-
-The package command creates `dist/hermes-skins-pack-v<version>.zip`.
-
-## License
-
-MIT. Do whatever you want with these.
 
 Made by @BChopLXXXII
 
 Built for vibe coders who just want their AI to feel less... corporate.
-
-Ship it. 🚀
 
 If this helped, ⭐ the repo — it helps others find it.
