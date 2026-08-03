@@ -1,6 +1,7 @@
 name: Home Assistant Bridge CI
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - "repository.yaml"
