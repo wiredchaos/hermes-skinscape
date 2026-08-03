@@ -74,7 +74,7 @@ function runGenerate() {
     window.setTimeout(() => {
       setGenerateState('✦ Generate', false);
       if (statusOutput) {
-        statusOutput.textContent = 'Add a PFP, logo, or GitHub profile URL first.';
+        statusOutput.textContent = 'Add a still image, PFP, logo, or GitHub profile URL first.';
         statusOutput.dataset.tone = 'error';
       }
       fileInput?.focus();
@@ -126,6 +126,64 @@ function alignHeroWithGamma() {
   }
 }
 
+function mountMediaModeSwitcher() {
+  const forge = byId('forge');
+  const videoSection = byId('videoAscii');
+  if (!forge || !videoSection) return;
+
+  forge.insertAdjacentElement('afterend', videoSection);
+
+  const imageLabel = fileInput?.closest('label');
+  if (imageLabel?.firstChild) imageLabel.firstChild.textContent = 'Still image / PFP upload\n          ';
+  const imageHint = imageLabel?.querySelector('.field-hint');
+  if (imageHint) imageHint.textContent = 'Still images only: square PNG, JPG, or WebP under 8 MB. Choose Video → ASCII above for motion.';
+
+  const heading = forge.querySelector('.section-heading');
+  if (!heading || forge.querySelector('.media-mode-picker')) return;
+
+  const picker = document.createElement('div');
+  picker.className = 'media-mode-picker';
+  picker.setAttribute('role', 'group');
+  picker.setAttribute('aria-label', 'Choose media input');
+  picker.innerHTML = `
+    <button id="chooseImageMode" class="media-mode-button is-active" type="button" aria-pressed="true">
+      <strong>IMAGE / PFP</strong>
+      <span>Still image → ASCII identity</span>
+    </button>
+    <button id="chooseVideoMode" class="media-mode-button" type="button" aria-pressed="false">
+      <strong>VIDEO → ASCII</strong>
+      <span>Moving video → animated ASCII</span>
+    </button>`;
+  heading.insertAdjacentElement('afterend', picker);
+
+  const imageButton = byId('chooseImageMode');
+  const videoButton = byId('chooseVideoMode');
+
+  const activate = (target) => {
+    const videoActive = target === 'video';
+    setPressed(imageButton, !videoActive);
+    setPressed(videoButton, videoActive);
+    if (videoActive) {
+      videoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.setTimeout(() => byId('videoFile')?.focus(), 450);
+    } else {
+      fileInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      window.setTimeout(() => fileInput?.focus(), 450);
+    }
+  };
+
+  imageButton?.addEventListener('click', () => activate('image'));
+  videoButton?.addEventListener('click', () => activate('video'));
+
+  const nav = document.querySelector('.command-nav');
+  if (nav && !nav.querySelector('a[href="#videoAscii"]')) {
+    const videoLink = document.createElement('a');
+    videoLink.href = '#videoAscii';
+    videoLink.textContent = 'VIDEO';
+    nav.insertBefore(videoLink, nav.querySelector('a[href="#worlds"]'));
+  }
+}
+
 customButton?.addEventListener('click', () => selectMode('protected'));
 standardButton?.addEventListener('click', () => selectMode('unrestricted'));
 brandMode?.addEventListener('change', syncThemePills);
@@ -133,5 +191,6 @@ brandName?.addEventListener('input', syncIdentityName);
 generateButton?.addEventListener('click', runGenerate);
 
 alignHeroWithGamma();
+mountMediaModeSwitcher();
 syncThemePills();
 syncIdentityName();
