@@ -1,6 +1,10 @@
 # Local-only media / private assets (do not commit)
 assets/
 
+# Generated package and Python cache
+dist/
+__pycache__/
+
 # Windows download metadata junk
 *:Zone.Identifier
 *.Zone.Identifier
