@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Turn the original 50 Hermes skins into rotating terminal worlds and generate a branded ASCII identity from an image or URL.">
+  <title>Hermes Skinscape</title>
+  <link rel="stylesheet" href="./web/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">COMMUNITY IDENTITY FORGE</p>
+      <h1>Hermes Skinscape</h1>
+      <p>Your identity. Fifty worlds. One Hermes terminal.</p>
+    </div>
+    <a href="https://github.com/wiredchaos/hermes-skinscape">GitHub repository</a>
+  </header>
+
+  <main>
+    <section class="controls" aria-labelledby="build-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">BUILD</p>
+          <h2 id="build-title">Create your terminal identity</h2>
+        </div>
+        <output id="status" aria-live="polite">Starting...</output>
+      </div>
+
+      <div class="control-grid">
+        <label>
+          Upload PFP or logo
+          <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+        </label>
+        <label>
+          Image or GitHub profile URL
+          <span class="input-row"><input id="imageUrl" type="url" placeholder="https://github.com/username"><button id="loadUrl" type="button">Load</button></span>
+        </label>
+        <label>
+          Brand name
+          <input id="brandName" type="text" value="HERMES IDENTITY" maxlength="48">
+        </label>
+        <label>
+          Brand behavior
+          <select id="brandMode">
+            <option value="extracted">Extract colors from image</option>
+            <option value="custom">Use my colors</option>
+            <option value="protected">Protect my colors while worlds rotate</option>
+            <option value="unrestricted">Let every skin recolor everything</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="color-row">
+        <label>Primary <input id="primaryColor" type="color" value="#25d9ff"></label>
+        <label>Secondary <input id="secondaryColor" type="color" value="#ff3b81"></label>
+        <label>Accent <input id="accentColor" type="color" value="#63e67b"></label>
+        <label>ASCII width <input id="asciiWidth" type="range" min="24" max="96" value="52"><span id="asciiWidthValue">52</span></label>
+      </div>
+    </section>
+
+    <section class="terminal-shell" aria-label="Hermes terminal preview">
+      <div class="terminal-topbar">
+        <div><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div><strong id="skinName">loading</strong> <span id="skinCounter">0 / 50</span></div>
+        <span id="skinDescription">Loading skin library</span>
+      </div>
+      <div class="terminal-banner">
+        <p class="terminal-logo">HERMES<br>SKINSCAPE</p>
+        <div>
+          <h2 id="terminalBrand">HERMES IDENTITY</h2>
+          <p>50 SKINS · ASCII IDENTITY · LOCAL-FIRST PREVIEW</p>
+        </div>
+      </div>
+      <div class="terminal-content">
+        <div class="portrait-panel">
+          <img id="avatarPreview" alt="Uploaded identity preview" hidden>
+          <pre id="asciiPortrait" aria-label="Generated ASCII portrait">UPLOAD A PFP
+OR PASTE AN HTTPS URL
+TO GENERATE YOUR ASCII IDENTITY.</pre>
+        </div>
+        <div class="telemetry">
+          <p><strong>Hermes Agent</strong> community preview</p>
+          <p class="accent">▾ Available Tools</p>
+          <p>file · terminal · browser · memory · delegation</p>
+          <p class="accent">▸ Available Skills</p>
+          <p>Identity forge · skin rotation · profile export</p>
+          <p class="accent">▸ MCP Servers</p>
+          <p>Connection status remains owned by the local Hermes runtime.</p>
+          <p class="signal">NO LOCKED BRAND. USER CONTROLS IDENTITY.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screensaver" aria-labelledby="screensaver-title">
+      <div>
+        <p class="eyebrow">ROTATE</p>
+        <h2 id="screensaver-title">All 50 worlds</h2>
+        <p>The scene changes. Your identity stays recognizable.</p>
+      </div>
+      <div class="transport">
+        <button id="previous" type="button">Previous</button>
+        <button id="playPause" type="button">Play</button>
+        <button id="next" type="button">Next</button>
+        <label>Seconds <input id="interval" type="number" min="2" max="300" value="15"></label>
+        <label class="check"><input id="shuffle" type="checkbox"> Shuffle</label>
+      </div>
+    </section>
+
+    <section class="export-panel" aria-labelledby="export-title">
+      <div>
+        <p class="eyebrow">EXPORT</p>
+        <h2 id="export-title">Keep what you make</h2>
+      </div>
+      <div class="transport">
+        <button id="exportProfile" type="button">Profile JSON</button>
+        <button id="exportAscii" type="button">ASCII TXT</button>
+        <button id="exportHtml" type="button">Standalone HTML</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Original 50-skin collection by BChopLXXXII. Hermes Skinscape preserves upstream attribution and remains brand-neutral for the community.
+  </footer>
+  <script type="module" src="./web/app.js"></script>
+</body>
+</html>
