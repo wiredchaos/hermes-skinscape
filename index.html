@@ -6,6 +6,8 @@
   <meta name="description" content="Turn the original 50 Hermes skins into rotating Agentropolis terminal worlds and generate a branded ASCII identity from an image or URL.">
   <title>Hermes Skinscape</title>
   <link rel="stylesheet" href="./web/styles.css">
+  <link rel="stylesheet" href="./web/3d/city.css">
+  <link rel="stylesheet" href="./web/onboarding.css">
 </head>
 <body>
   <div class="city-stage" aria-hidden="true">
@@ -23,7 +25,12 @@
       <p>Your identity. Fifty worlds. One living terminal city.</p>
     </div>
     <div class="header-actions">
-      <a href="https://github.com/wiredchaos/hermes-skinscape">GitHub repository</a>
+      <div class="header-guide-actions" aria-label="Help and onboarding">
+        <button id="openQuickStart" type="button">Start here</button>
+        <button id="startTourSecondary" type="button">Guided tour</button>
+        <button id="openExplainer" type="button">Watch explainer</button>
+        <a href="https://github.com/wiredchaos/hermes-skinscape">GitHub repository</a>
+      </div>
       <div class="city-controls" aria-label="3D city controls">
         <label>
           City quality
@@ -56,7 +63,36 @@
       </div>
     </section>
 
-    <section class="controls glass-panel" aria-labelledby="build-title">
+    <section id="quickStart" class="quick-start glass-panel" aria-labelledby="quick-start-title">
+      <div class="quick-start-copy">
+        <p class="eyebrow">START HERE</p>
+        <h2 id="quick-start-title">Build your identity in three moves.</h2>
+        <p>You do not need to configure Hermes first. Make a preview, rotate the worlds, then export the result you want to keep.</p>
+        <div class="quick-start-actions">
+          <button id="startTour" type="button">Guide me through it</button>
+          <button type="button" id="openExplainerInline">Open explainer</button>
+        </div>
+      </div>
+      <div class="quick-start-grid">
+        <article class="quick-step">
+          <span class="quick-step-number">1</span>
+          <h3>Add an identity</h3>
+          <p>Upload a PFP or logo, or paste a public GitHub profile URL.</p>
+        </article>
+        <article class="quick-step">
+          <span class="quick-step-number">2</span>
+          <h3>Preview the worlds</h3>
+          <p>Check your ASCII portrait, then rotate through all 50 Hermes skins.</p>
+        </article>
+        <article class="quick-step">
+          <span class="quick-step-number">3</span>
+          <h3>Export your result</h3>
+          <p>Download a profile JSON, ASCII text, or standalone HTML preview.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="controls glass-panel" data-tour="identity" aria-labelledby="build-title">
       <div class="section-heading">
         <div>
           <p class="eyebrow">IDENTITY FORGE</p>
@@ -69,14 +105,17 @@
         <label>
           Upload PFP or logo
           <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+          <span class="field-hint">Best results: square PNG, JPG, or WebP under 8 MB.</span>
         </label>
         <label>
           Image or GitHub profile URL
           <span class="input-row"><input id="imageUrl" type="url" placeholder="https://github.com/username"><button id="loadUrl" type="button">Load</button></span>
+          <span class="field-hint">A GitHub profile URL is converted to its public avatar automatically.</span>
         </label>
         <label>
           Brand name
           <input id="brandName" type="text" value="HERMES IDENTITY" maxlength="48">
+          <span class="field-hint">This becomes the identity name shown in the terminal and exports.</span>
         </label>
         <label>
           Brand behavior
@@ -86,6 +125,7 @@
             <option value="protected">Protect my colors while worlds rotate</option>
             <option value="unrestricted">Let every skin recolor everything</option>
           </select>
+          <span class="field-hint">Protected keeps your identity colors stable while the surrounding city changes.</span>
         </label>
       </div>
 
@@ -95,9 +135,13 @@
         <label>Accent <input id="accentColor" type="color" value="#63e67b"></label>
         <label>ASCII width <input id="asciiWidth" type="range" min="24" max="96" value="52"><span id="asciiWidthValue">52</span></label>
       </div>
+      <details class="inline-hint">
+        <summary>Which brand behavior should I choose?</summary>
+        <p>Choose <strong>Extracted</strong> for automatic image colors, <strong>Custom</strong> to select your own, <strong>Protected</strong> to preserve your brand during rotation, or <strong>Unrestricted</strong> for the strongest world transformations.</p>
+      </details>
     </section>
 
-    <section class="terminal-shell" aria-label="Hermes terminal preview">
+    <section class="terminal-shell" data-tour="preview" aria-label="Hermes terminal preview">
       <div class="terminal-topbar">
         <div><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
         <div><strong id="skinName">loading</strong> <span id="skinCounter">0 / 50</span></div>
@@ -130,7 +174,7 @@ TO GENERATE YOUR ASCII IDENTITY.</pre>
       </div>
     </section>
 
-    <section class="screensaver glass-panel" aria-labelledby="screensaver-title">
+    <section class="screensaver glass-panel" data-tour="worlds" aria-labelledby="screensaver-title">
       <div>
         <p class="eyebrow">CITY ROTATION</p>
         <h2 id="screensaver-title">All 50 worlds</h2>
@@ -145,10 +189,11 @@ TO GENERATE YOUR ASCII IDENTITY.</pre>
       </div>
     </section>
 
-    <section class="export-panel glass-panel" aria-labelledby="export-title">
+    <section class="export-panel glass-panel" data-tour="export" aria-labelledby="export-title">
       <div>
         <p class="eyebrow">EXPORT</p>
         <h2 id="export-title">Keep what you make</h2>
+        <p>Exports download locally. They do not overwrite your Hermes configuration.</p>
       </div>
       <div class="transport">
         <button id="exportProfile" type="button">Profile JSON</button>
@@ -158,10 +203,53 @@ TO GENERATE YOUR ASCII IDENTITY.</pre>
     </section>
   </main>
 
+  <button id="floatingHelp" class="floating-help" type="button" aria-label="Open quick start help">?</button>
+
+  <dialog id="explainerDialog" class="explainer-dialog" aria-labelledby="explainerTitle">
+    <div class="explainer-header">
+      <div>
+        <p class="eyebrow">EXPLAINER</p>
+        <h2 id="explainerTitle">How Hermes Skinscape Works</h2>
+      </div>
+      <button id="closeExplainer" class="explainer-close" type="button">Close</button>
+    </div>
+    <div class="explainer-body">
+      <iframe id="gammaFrame" class="gamma-frame" title="Hermes Skinscape explainer" loading="lazy" allowfullscreen hidden></iframe>
+      <div id="explainerFallback" class="explainer-fallback">
+        <p>Your Gamma can replace this built-in guide later. The site remains fully understandable without an external embed.</p>
+        <div class="explainer-steps">
+          <article class="explainer-step"><strong>1. Upload</strong><p>Add a PFP, logo, direct image URL, or public GitHub profile URL.</p></article>
+          <article class="explainer-step"><strong>2. Generate</strong><p>The browser extracts colors and produces a colorized ASCII identity locally.</p></article>
+          <article class="explainer-step"><strong>3. Rotate</strong><p>Move through all 50 Hermes skins while the Agentropolis city changes with them.</p></article>
+          <article class="explainer-step"><strong>4. Export</strong><p>Download the identity profile, ASCII text, or standalone browser preview.</p></article>
+        </div>
+        <div class="quick-start-actions">
+          <button id="startTourDialog" type="button">Start guided tour</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="tourOverlay" class="tour-overlay" hidden>
+    <section class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tourTitle">
+      <p id="tourStep" class="tour-progress">Step 1 of 5</p>
+      <h2 id="tourTitle">Start here</h2>
+      <p id="tourText">Choose an identity, preview it, rotate the worlds, and export.</p>
+      <div class="tour-actions">
+        <button id="tourClose" type="button">Exit</button>
+        <div>
+          <button id="tourPrevious" type="button">Back</button>
+          <button id="tourNext" type="button">Next</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <footer>
     Original 50-skin collection by BChopLXXXII. Hermes Skinscape preserves upstream attribution. Agentropolis provides the optional city presentation layer.
   </footer>
   <script type="module" src="./web/app.js"></script>
   <script type="module" src="./web/3d/bootstrap.js"></script>
+  <script type="module" src="./web/onboarding.js"></script>
 </body>
 </html>
