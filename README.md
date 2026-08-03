@@ -52,6 +52,10 @@ cp skins/neon-ghost.yaml ~/.hermes/skins/
 
 Every skin defines the complete current Hermes palette, including syntax colors and `shell_dollar`, so it does not silently inherit the default theme.
 
+## License
+
+MIT. See `LICENSE`.
+
 Made by @BChopLXXXII
 
 Built for vibe coders who just want their AI to feel less... corporate.
