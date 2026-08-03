@@ -1,0 +1,35 @@
+name: Home Assistant Bridge CI
+
+on:
+  pull_request:
+    paths:
+      - "repository.yaml"
+      - "hermes_skinscape/**"
+      - "tests/test_ha_bridge.py"
+      - ".github/workflows/ha-bridge-ci.yml"
+  push:
+    branches:
+      - feat/home-assistant-bridge
+    paths:
+      - "repository.yaml"
+      - "hermes_skinscape/**"
+      - "tests/test_ha_bridge.py"
+      - ".github/workflows/ha-bridge-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile server
+        run: python -m py_compile hermes_skinscape/server.py
+      - name: Run unit tests
+        run: python -m unittest tests/test_ha_bridge.py -v
+      - name: Build Home Assistant app container
+        run: docker build --build-arg BUILD_VERSION=0.2.0 --build-arg BUILD_ARCH=amd64 -t hermes-skinscape-bridge:test hermes_skinscape
