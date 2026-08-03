@@ -1,0 +1,41 @@
+version: 1
+profile:
+  id: community-example
+  name: Community Example
+
+identity:
+  source:
+    type: upload
+    value: null
+  preserve_subject: true
+  ascii:
+    width: 48
+    mode: ansi
+    background: transparent
+
+brand:
+  mode: extracted
+  name: null
+  logo: null
+  colors:
+    primary: null
+    secondary: null
+    accent: null
+    background: null
+  protected_tokens: []
+
+screensaver:
+  enabled: true
+  source: all
+  order: sequential
+  interval_seconds: 15
+  include_all_50: true
+  playlist: []
+  idle_activation_seconds: 300
+
+exports:
+  skin_yaml: true
+  profile_yaml: true
+  ascii_text: true
+  ansi_text: true
+  preview_html: true
