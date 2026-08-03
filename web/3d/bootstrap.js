@@ -1,5 +1,10 @@
 import { initAgentropolisCity } from './city.js';
 
+const styleLink = document.createElement('link');
+styleLink.rel = 'stylesheet';
+styleLink.href = new URL('./city.css', import.meta.url).href;
+document.head.append(styleLink);
+
 const canvas = document.getElementById('agentropolisCanvas');
 const status = document.getElementById('cityStatus');
 const quality = document.getElementById('cityQuality');
