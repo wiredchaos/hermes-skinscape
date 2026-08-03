@@ -1,3 +1,5 @@
+import './video-ascii.js';
+
 const byId = (id) => document.getElementById(id);
 
 const brandMode = byId('brandMode');
@@ -93,14 +95,14 @@ function alignHeroWithGamma() {
   if (brandTitle) brandTitle.textContent = 'Your Identity. Fifty Worlds...';
   if (heroTitle) heroTitle.innerHTML = 'Your Identity. Fifty Worlds. One Living Terminal City.';
   if (heroLead) {
-    heroLead.textContent = 'Turn your PFP, avatar, or logo into a persistent Hermes terminal identity — then watch it survive across 50 rotating visual worlds.';
+    heroLead.textContent = 'Turn your PFP, avatar, logo, or video into a persistent Hermes terminal identity — then watch it survive across 50 rotating visual worlds.';
   }
 
   if (heroLead && !document.querySelector('.hero-badges')) {
     const badges = document.createElement('div');
     badges.className = 'hero-badges';
     badges.setAttribute('aria-label', 'Core features');
-    ['PFP TO ASCII', '50 HERMES SKINS', 'AGENTROPOLIS 3D CITY'].forEach((label) => {
+    ['PFP + VIDEO TO ASCII', '50 HERMES SKINS', 'AGENTROPOLIS 3D CITY'].forEach((label) => {
       const badge = document.createElement('span');
       badge.textContent = label;
       badges.appendChild(badge);
