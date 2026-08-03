@@ -84,11 +84,52 @@ function runGenerate() {
   window.setTimeout(() => finishGenerate(), 700);
 }
 
+function alignHeroWithGamma() {
+  const heroTitle = byId('hero-title');
+  const heroLead = document.querySelector('.hero-lede');
+  const heroActions = document.querySelector('.hero-actions');
+  const brandTitle = document.querySelector('.brand-lockup strong');
+
+  if (brandTitle) brandTitle.textContent = 'Your Identity. Fifty Worlds...';
+  if (heroTitle) heroTitle.innerHTML = 'Your Identity. Fifty Worlds. One Living Terminal City.';
+  if (heroLead) {
+    heroLead.textContent = 'Turn your PFP, avatar, or logo into a persistent Hermes terminal identity — then watch it survive across 50 rotating visual worlds.';
+  }
+
+  if (heroLead && !document.querySelector('.hero-badges')) {
+    const badges = document.createElement('div');
+    badges.className = 'hero-badges';
+    badges.setAttribute('aria-label', 'Core features');
+    ['PFP TO ASCII', '50 HERMES SKINS', 'AGENTROPOLIS 3D CITY'].forEach((label) => {
+      const badge = document.createElement('span');
+      badge.textContent = label;
+      badges.appendChild(badge);
+    });
+    heroLead.insertAdjacentElement('afterend', badges);
+  }
+
+  const primary = heroActions?.querySelector('.primary-action');
+  const secondary = heroActions?.querySelector('.secondary-action');
+  if (primary) {
+    primary.textContent = 'Enter the Identity Forge';
+    primary.setAttribute('href', '#forge');
+  }
+  if (secondary) {
+    secondary.textContent = 'Start the Guided Tour';
+    secondary.setAttribute('href', '#quickStart');
+    secondary.addEventListener('click', (event) => {
+      event.preventDefault();
+      byId('startTour')?.click();
+    });
+  }
+}
+
 customButton?.addEventListener('click', () => selectMode('protected'));
 standardButton?.addEventListener('click', () => selectMode('unrestricted'));
 brandMode?.addEventListener('change', syncThemePills);
 brandName?.addEventListener('input', syncIdentityName);
 generateButton?.addEventListener('click', runGenerate);
 
+alignHeroWithGamma();
 syncThemePills();
 syncIdentityName();
