@@ -1,7 +1,5 @@
 export const ONBOARDING_CONFIG = Object.freeze({
-  // Paste only the HTTPS src URL from Gamma's generated iframe embed code.
-  // Example shape: https://gamma.app/embed/your-public-id
-  gammaEmbedUrl: '',
-  explainerTitle: 'How Hermes Skinscape Works',
+  gammaEmbedUrl: 'https://gamma.app/embed/8b2yut8p8q3i15j',
+  explainerTitle: 'Your Identity. Fifty Worlds. One Living Terminal City.',
   tourStorageKey: 'hermes-skinscape-tour-v1'
 });
