@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./web/styles.css">
   <link rel="stylesheet" href="./web/3d/city.css">
   <link rel="stylesheet" href="./web/onboarding.css">
+  <link rel="stylesheet" href="./web/hybrid.css">
 </head>
 <body>
   <div class="city-stage" aria-hidden="true">
@@ -18,18 +19,24 @@
     <div class="city-vignette"></div>
   </div>
 
-  <header class="site-header">
-    <div>
-      <p class="eyebrow">AGENTROPOLIS · HERMES CITY</p>
-      <h1>Hermes Skinscape</h1>
-      <p>Your identity. Fifty worlds. One living terminal city.</p>
-    </div>
+  <header class="site-header command-header">
+    <a class="brand-lockup" href="#top" aria-label="Hermes Skinscape home">
+      <span class="brand-mark" aria-hidden="true">H</span>
+      <span><strong>HERMES</strong><b>SKINSCAPE</b></span>
+    </a>
+
+    <nav class="command-nav" aria-label="Primary navigation">
+      <a href="#quickStart">START</a>
+      <a href="#forge">FORGE</a>
+      <a href="#worlds">WORLDS</a>
+      <a href="#exports">EXPORT</a>
+    </nav>
+
     <div class="header-actions">
       <div class="header-guide-actions" aria-label="Help and onboarding">
-        <button id="openQuickStart" type="button">Start here</button>
-        <button id="startTourSecondary" type="button">Guided tour</button>
-        <button id="openExplainer" type="button">Watch explainer</button>
-        <a href="https://github.com/wiredchaos/hermes-skinscape">GitHub repository</a>
+        <button id="openQuickStart" class="nav-cta" type="button">START HERE</button>
+        <button id="startTourSecondary" class="icon-button" type="button" aria-label="Start guided tour">?</button>
+        <button id="openExplainer" class="icon-button" type="button" aria-label="Open explainer">▶</button>
       </div>
       <div class="city-controls" aria-label="3D city controls">
         <label>
@@ -50,27 +57,41 @@
     </div>
   </header>
 
-  <main>
-    <section class="city-intro" aria-labelledby="city-title">
-      <div>
-        <p class="eyebrow">THE INTELLIGENCE GRID</p>
-        <h2 id="city-title">A terminal identity inside a living agent city.</h2>
+  <main id="top">
+    <section class="hero-command" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">AGENTROPOLIS · HERMES CITY</p>
+        <h1 id="hero-title">Your identity.<br><span>Fifty worlds.</span><br>One living terminal city.</h1>
+        <p class="hero-lede">Upload a PFP, turn it into colorized ASCII, preserve your brand, and deploy it across every Hermes skin inside the Agentropolis Intelligence Grid.</p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#forge">✦ Generate identity</a>
+          <a class="secondary-action" href="#worlds">Explore 50 worlds</a>
+        </div>
       </div>
-      <div class="city-metrics" aria-label="Agentropolis city status">
-        <span><strong>50</strong> world skins</span>
-        <span><strong>1</strong> persistent identity</span>
-        <span><strong>LOCAL</strong> image processing</span>
+
+      <div class="hero-command-card" aria-label="Skinscape status">
+        <div class="hero-command-topline">
+          <span>SKINSCAPE OS</span>
+          <span class="status-live">● ONLINE</span>
+        </div>
+        <div class="hero-command-grid">
+          <article><strong>50</strong><span>world skins</span></article>
+          <article><strong>1</strong><span>persistent identity</span></article>
+          <article><strong>LOCAL</strong><span>image processing</span></article>
+          <article><strong>3D</strong><span>city renderer</span></article>
+        </div>
+        <p>Infrastructure becomes the terrain others must build on.</p>
       </div>
     </section>
 
-    <section id="quickStart" class="quick-start glass-panel" aria-labelledby="quick-start-title">
+    <section id="quickStart" class="quick-start glass-panel command-card" aria-labelledby="quick-start-title">
       <div class="quick-start-copy">
         <p class="eyebrow">START HERE</p>
         <h2 id="quick-start-title">Build your identity in three moves.</h2>
         <p>You do not need to configure Hermes first. Make a preview, rotate the worlds, then export the result you want to keep.</p>
         <div class="quick-start-actions">
-          <button id="startTour" type="button">Guide me through it</button>
-          <button type="button" id="openExplainerInline">Open explainer</button>
+          <button id="startTour" class="primary-action button-reset" type="button">Guide me through it</button>
+          <button type="button" id="openExplainerInline" class="secondary-action button-reset">Open explainer</button>
         </div>
       </div>
       <div class="quick-start-grid">
@@ -92,13 +113,25 @@
       </div>
     </section>
 
-    <section class="controls glass-panel" data-tour="identity" aria-labelledby="build-title">
+    <section id="forge" class="controls glass-panel command-card" data-tour="identity" aria-labelledby="build-title">
       <div class="section-heading">
         <div>
           <p class="eyebrow">IDENTITY FORGE</p>
-          <h2 id="build-title">Create your terminal identity</h2>
+          <h2 id="build-title">Pick a theme. Build the identity.</h2>
+          <p>Choose how much control your profile keeps while the worlds rotate.</p>
         </div>
         <output id="status" aria-live="polite">Starting...</output>
+      </div>
+
+      <div class="theme-mode-picker" role="group" aria-label="Theme behavior">
+        <button id="themeCustom" class="theme-pill is-active" type="button" data-brand-mode="protected" aria-pressed="true">🛠 Custom</button>
+        <button id="themeStandard" class="theme-pill" type="button" data-brand-mode="unrestricted" aria-pressed="false">◈ Standard</button>
+      </div>
+
+      <div class="identity-card-preview">
+        <p class="identity-card-label">ACTIVE IDENTITY</p>
+        <h3 id="identityCardName">HERMES IDENTITY</h3>
+        <p>Your brand stays recognizable while the city, terminal palette, and atmosphere transform around it.</p>
       </div>
 
       <div class="control-grid">
@@ -139,9 +172,11 @@
         <summary>Which brand behavior should I choose?</summary>
         <p>Choose <strong>Extracted</strong> for automatic image colors, <strong>Custom</strong> to select your own, <strong>Protected</strong> to preserve your brand during rotation, or <strong>Unrestricted</strong> for the strongest world transformations.</p>
       </details>
+
+      <button id="generateIdentity" class="generate-action" type="button">✦ Generate</button>
     </section>
 
-    <section class="terminal-shell" data-tour="preview" aria-label="Hermes terminal preview">
+    <section class="terminal-shell command-card" data-tour="preview" aria-label="Hermes terminal preview">
       <div class="terminal-topbar">
         <div><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
         <div><strong id="skinName">loading</strong> <span id="skinCounter">0 / 50</span></div>
@@ -174,7 +209,7 @@ TO GENERATE YOUR ASCII IDENTITY.</pre>
       </div>
     </section>
 
-    <section class="screensaver glass-panel" data-tour="worlds" aria-labelledby="screensaver-title">
+    <section id="worlds" class="screensaver glass-panel command-card" data-tour="worlds" aria-labelledby="screensaver-title">
       <div>
         <p class="eyebrow">CITY ROTATION</p>
         <h2 id="screensaver-title">All 50 worlds</h2>
@@ -182,14 +217,14 @@ TO GENERATE YOUR ASCII IDENTITY.</pre>
       </div>
       <div class="transport">
         <button id="previous" type="button">Previous</button>
-        <button id="playPause" type="button">Play</button>
+        <button id="playPause" class="primary-action button-reset" type="button">Play</button>
         <button id="next" type="button">Next</button>
         <label>Seconds <input id="interval" type="number" min="2" max="300" value="15"></label>
         <label class="check"><input id="shuffle" type="checkbox"> Shuffle</label>
       </div>
     </section>
 
-    <section class="export-panel glass-panel" data-tour="export" aria-labelledby="export-title">
+    <section id="exports" class="export-panel glass-panel command-card" data-tour="export" aria-labelledby="export-title">
       <div>
         <p class="eyebrow">EXPORT</p>
         <h2 id="export-title">Keep what you make</h2>
@@ -251,5 +286,6 @@ TO GENERATE YOUR ASCII IDENTITY.</pre>
   <script type="module" src="./web/app.js"></script>
   <script type="module" src="./web/3d/bootstrap.js"></script>
   <script type="module" src="./web/onboarding.js"></script>
+  <script type="module" src="./web/hybrid-ui.js"></script>
 </body>
 </html>
