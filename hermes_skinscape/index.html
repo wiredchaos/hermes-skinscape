@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Hermes Skinscape Bridge</title>
+  <style>
+    :root { color-scheme: dark; font: 16px system-ui, sans-serif; }
+    body { max-width: 900px; margin: 0 auto; padding: 2rem; background: #111; color: #eee; }
+    video { display: block; width: 100%; min-height: 12rem; margin: 1rem 0; background: #000; }
+    form { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+    button { padding: .6rem 1rem; }
+    #message { min-height: 1.5em; }
+  </style>
+</head>
+<body>
+  <h1>Hermes Skinscape Bridge</h1>
+  <p>Upload an animated ASCII WebM. The active file is retained when the app restarts.</p>
+  <video id="player" controls autoplay loop muted playsinline hidden></video>
+  <form id="upload-form">
+    <input id="media" name="media" type="file" accept="video/webm,.webm" required>
+    <button type="submit">Replace active media</button>
+  </form>
+  <p id="message" role="status" aria-live="polite"></p>
+  <script>
+    // Preserve the opaque Home Assistant ingress prefix even when the browser
+    // presents it without a trailing slash. Never address HA's root directly.
+    const ingressPath = location.pathname.endsWith('/') ? location.pathname : `${location.pathname}/`;
+    const api = (path) => new URL(`${ingressPath}api/${path}`, location.origin).toString();
+    const player = document.querySelector('#player');
+    const message = document.querySelector('#message');
+
+    async function refresh() {
+      const response = await fetch(api('status'), { cache: 'no-store' });
+      const status = await response.json();
+      player.hidden = !status.available;
+      if (status.available) player.src = `${api('media')}?v=${status.updated_ns}`;
+    }
+
+    document.querySelector('#upload-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const file = document.querySelector('#media').files[0];
+      message.textContent = 'Uploading…';
+      const response = await fetch(api('media'), {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type || 'video/webm' },
+        body: file,
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Upload failed');
+      message.textContent = 'Active media updated.';
+      await refresh();
+      await player.play().catch(() => {});
+    });
+
+    refresh().catch((error) => { message.textContent = error.message; });
+    window.addEventListener('unhandledrejection', (event) => {
+      message.textContent = event.reason?.message || 'Request failed';
+    });
+  </script>
+</body>
+</html>

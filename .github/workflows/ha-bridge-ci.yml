@@ -1,0 +1,26 @@
+name: Home Assistant Bridge CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - feat/home-assistant-bridge
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile server
+        run: python -m py_compile hermes_skinscape/server.py
+      - name: Run bridge tests
+        run: python -m unittest tests/test_ha_bridge.py -v
+      - name: Build app image
+        run: docker build -t hermes-skinscape-bridge:test hermes_skinscape
