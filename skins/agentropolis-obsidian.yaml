@@ -1,0 +1,129 @@
+name: agentropolis-obsidian
+description: HERMES // AGENTROPOLIS — obsidian command center with cyan structural illumination and red operational accents
+
+# AGENTROPOLIS Cyber Command Center — flagship skin for the Cyber TUI.
+# Palette targets: obsidian surfaces, cyan/electric-blue structure, red ops,
+# magenta accents, pale readable text. Semantic keys follow the canonical
+# Hermes skin schema (apps/shared/src/skin.ts / hermes_cli/skin_engine.py).
+# Every value is #rrggbb hex; missing keys inherit the `default` skin.
+
+colors:
+  # ── Base surface ────────────────────────────────────────────────
+  background: "#05080D"            # obsidian near-black
+  # ── Brand accent + primary ──────────────────────────────────────
+  ui_accent: "#38C7FF"             # cyan — structural illumination
+  ui_primary: "#DCE9F5"            # pale white-blue primary text
+  banner_accent: "#168CFF"         # electric blue — section headers
+  banner_title: "#38C7FF"          # cyan — panel titles
+  # ── Text ────────────────────────────────────────────────────────
+  ui_text: "#DCE9F5"               # text-primary
+  banner_text: "#DCE9F5"           # text-primary
+  banner_dim: "#5B7891"            # muted
+  # ── Structure ───────────────────────────────────────────────────
+  ui_border: "#102D42"             # selection/deep cyan border
+  banner_border: "#102D42"         # neon cyberdeck border (deep)
+  # ── Semantic status ─────────────────────────────────────────────
+  ui_ok: "#34E2A4"                 # success
+  ui_warn: "#FFB454"               # warning
+  ui_error: "#FF4058"              # error / red ops
+  ui_label: "#9DB4C8"              # text-secondary labels
+  # ── Element-specific ────────────────────────────────────────────
+  ui_tool: "#38C7FF"               # tool-call markers (● / spinner) — cyan
+  ui_thinking: "#168CFF"           # reasoning text — electric blue
+  diff_added: "#0E2B22"
+  diff_removed: "#2B0F16"
+  diff_added_word: "#34E2A4"
+  diff_removed_word: "#FF4058"
+  syntax_string: "#FFB454"
+  syntax_number: "#38C7FF"
+  syntax_keyword: "#FF2E88"        # magenta keyword accent
+  syntax_comment: "#5B7891"
+  # ── CLI / TUI chrome ────────────────────────────────────────────
+  prompt: "#38C7FF"                # prompt symbol — cyan
+  input_rule: "#168CFF"            # input rule — electric blue
+  response_border: "#102D42"
+  shell_dollar: "#34E2A4"
+  selection_bg: "#102D42"          # selection highlight
+  session_label: "#FF2E88"         # magenta — session label
+  session_border: "#102D42"
+  status_bar_bg: "#05080D"
+  status_bar_text: "#9DB4C8"
+  status_bar_strong: "#DCE9F5"
+  status_bar_dim: "#5B7891"
+  status_bar_good: "#34E2A4"
+  status_bar_warn: "#FFB454"
+  status_bar_bad: "#FF4058"
+  status_bar_critical: "#FF2E88"
+  voice_status_bg: "#05080D"
+  completion_menu_bg: "#08111B"
+  completion_menu_current_bg: "#102D42"
+  completion_menu_meta_bg: "#08111B"
+  completion_menu_meta_current_bg: "#102D42"
+
+# Hand-tuned overlay for light terminals (dark-authored skin). Same keys as
+# colors; keeps contrast-clamped foregrounds readable on light backgrounds.
+light_colors:
+  background: "#EAF2F9"
+  ui_accent: "#0077CC"
+  ui_primary: "#0B1622"
+  banner_accent: "#005FAA"
+  banner_title: "#0077CC"
+  ui_text: "#0B1622"
+  banner_text: "#0B1622"
+  banner_dim: "#5B7891"
+  ui_border: "#8FB8D8"
+  banner_border: "#8FB8D8"
+  ui_ok: "#0E7A55"
+  ui_warn: "#B26A00"
+  ui_error: "#C81E36"
+  ui_label: "#2E4A63"
+  ui_tool: "#0077CC"
+  ui_thinking: "#005FAA"
+  syntax_string: "#B26A00"
+  syntax_number: "#0077CC"
+  syntax_keyword: "#C2187B"
+  syntax_comment: "#5B7891"
+  prompt: "#0077CC"
+  input_rule: "#005FAA"
+  response_border: "#8FB8D8"
+  shell_dollar: "#0E7A55"
+  selection_bg: "#C7DCEF"
+  session_label: "#C2187B"
+  session_border: "#8FB8D8"
+  status_bar_bg: "#DCE7F0"
+  status_bar_text: "#2E4A63"
+  status_bar_strong: "#0B1622"
+  status_bar_dim: "#5B7891"
+  status_bar_good: "#0E7A55"
+  status_bar_warn: "#B26A00"
+  status_bar_bad: "#C81E36"
+  status_bar_critical: "#C2187B"
+  voice_status_bg: "#DCE7F0"
+  completion_menu_bg: "#EAF2F9"
+  completion_menu_current_bg: "#C7DCEF"
+  completion_menu_meta_bg: "#EAF2F9"
+  completion_menu_meta_current_bg: "#C7DCEF"
+
+branding:
+  agent_name: "HERMES // AGENTROPOLIS"
+  prompt_symbol: "❯"
+  welcome: "HERMES // AGENTROPOLIS — cybernetic mission control online."
+  goodbye: "Returning to the surface. HERMES // AGENTROPOLIS offline."
+  response_label: " ⚡ HERMES // AGENTROPOLIS "
+
+spinner:
+  waiting_faces:
+    - "(⚡)"
+    - "(⟁)"
+  thinking_faces:
+    - "(⌁)"
+    - "(◈)"
+  thinking_verbs:
+    - "routing"
+    - "scanning"
+    - "interfacing"
+  wings:
+    - ["⟪", "⟫"]
+    - ["◇", "◇"]
+
+tool_prefix: "▏"
