@@ -1,0 +1,47 @@
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ HERMES //          RUNTIME LIVE  SESSION preview0  MODEL deepseek/deepseek-v4-flash-0731  AGENTS 4  QUEUE ◉  STATE ◉│
+│ AGENTROPOLIS       OPERATIONAL                                                │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+╭──────────────────────────╮  COMMAND-CENTER · OPERATIONAL · COMMAND CENTER     ╭──────────────────────────╮
+│ ▚ MISSION ─────────LIVE  │   YOU ▸ Build the Cyber TUI v0.1                   │▚ SYSTEM ──────────LIVE│
+│                          │   HERMES ▸ Discovery complete. HERMES_TUI_DIR confirmed; buil…│MODEdeepseek/deepseek-v4│
+│ CYBER TUI PREVIEW        │   TOOL ▸ terminal: npm run build → dist/entry.js   │-flash-0731│
+│ /workspace/hermes-skins… │                                                    │PROVIDERnous│
+│ ● RUNNING                │                                                    │APPROVALmanual│
+╰──────────────────────────╯                                                    │SESSIONpreview0001│
+                                                                                │/workspace/hermes-skins…│
+╭──────────────────────────╮                                                    │⎇ feat/cyber-tui-v0.1│
+│ ▚ TASKS ────────── LIVE  │                                                    │tok 48213 (p 19020)│
+│ ✓ Build CyberShell layo… │                                                    ╰──────────────────────────╯
+│ ✓ Bind gateway adapters  │
+│ ○ Write fallback tests   │                                                    ╭──────────────────────────╮
+╰──────────────────────────╯                                                    │▚ APPROVALS LIVE│
+                                                                                │──────────│
+╭──────────────────────────╮                                                    │▲ git push origin feat/…│
+│ ▚ AGENTS ──────────LIVE  │                                                    │once | session | deny│
+│ ◆ terminal               │                                                    ╰──────────────────────────╯
+│ ◆ web_search             │
+│ ◆ read_file              │                                                    ╭──────────────────────────╮
+│ ◇ hermes-agent           │                                                    │▚ ACTIVITY ◉ │
+╰──────────────────────────╯                                                    │──────────STREAMING│
+                                                                                ││
+╭──────────────────────────╮                                                    │▆██▆│
+│ ▚ ENTROPY  PROVIDER NOT  │                                                    │▸ ready│
+│ ────────── CONNECTED     │                                                    │◆ npm run build → ok (0…│
+│ ENTROPY: PROVIDER NOT    │                                                    │◆ terminal starting…│
+│ CONNECTED                │                                                    │▸ message streaming…│
+╰──────────────────────────╯                                                    ╰──────────────────────────╯
+
+╭──────────────────────────╮                                                    ╭──────────────────────────╮
+│ ▚ DRIFT   PROVIDER NOT   │                                                    │▚ RECEIPTS ────────LIVE│
+│ ──────────CONNECTED      │                                                    ││
+│ DRIFT: PROVIDER NOT      │                                                    │◆ terminal → 0.4s│
+│ CONNECTED                │                                                    │✓ Discovery complete. H…│
+╰──────────────────────────╯                                                    ╰──────────────────────────╯
+
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ > awaiting input…                                                             │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+/layout command-center | /layout focus | Esc quit                               FULL COMMAND CENTER
