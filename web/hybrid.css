@@ -25,10 +25,14 @@ button:active,.primary-action:active,.secondary-action:active{transform:translat
 
 .command-header{position:sticky;top:0;z-index:60;width:100%;max-width:none;padding:.78rem clamp(1rem,3vw,2.6rem);align-items:center;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(27,21,61,.94);backdrop-filter:blur(22px) saturate(1.1)}
 .brand-lockup{display:flex;align-items:center;gap:.8rem;min-width:0;text-decoration:none;color:var(--gamma-text)}
-.brand-mark{display:grid;place-items:center;flex:0 0 auto;width:3rem;height:3rem;border:1px solid rgba(255,255,255,.42);border-radius:.72rem;background:rgba(255,255,255,.025);font:900 1.25rem/1 ui-monospace,monospace;box-shadow:inset 0 0 18px rgba(255,255,255,.04)}
+/* AGENTROPOLIS HERMES SKINSCAPE responsive branding:
+   full wordmark on larger displays, compact H shield in narrow/mobile nav. */
+.brand-logo-img{display:block;flex:0 0 auto;height:2.7rem;width:auto;object-fit:contain;max-width:60vw}
+.brand-mark-img{display:none;flex:0 0 auto;width:2.7rem;height:2.7rem;object-fit:contain}
 .brand-lockup>span:last-child{display:grid;min-width:0}
 .brand-lockup strong{max-width:33ch;overflow:hidden;color:#fff;font-size:1rem;font-weight:650;text-overflow:ellipsis;white-space:nowrap}
 .brand-lockup b{margin-top:.2rem;color:#a9a1cf;font:700 .62rem/1 ui-monospace,monospace;letter-spacing:.13em}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .command-nav{display:flex;align-items:center;justify-content:center;gap:clamp(.8rem,2vw,1.7rem);margin-inline:auto}
 .command-nav a{color:#bdb7d3;text-decoration:none;font:800 .66rem/1 ui-monospace,monospace;letter-spacing:.14em}
 .command-nav a:hover{color:#fff}
@@ -124,7 +128,8 @@ main{width:min(1180px,calc(100% - 2rem));padding-bottom:4rem}
 
 @media(max-width:700px){
   .command-header{position:sticky;padding:.72rem .9rem}
-  .brand-mark{width:2.65rem;height:2.65rem}
+  .brand-logo-img{display:none}
+  .brand-mark-img{display:block;width:2.65rem;height:2.65rem}
   .brand-lockup strong{max-width:48vw;font-size:.94rem}
   .brand-lockup b{display:none}
   .header-guide-actions #startTourSecondary,.header-guide-actions #openExplainer{display:none!important}
@@ -153,7 +158,7 @@ main{width:min(1180px,calc(100% - 2rem));padding-bottom:4rem}
 }
 
 @media(max-width:420px){
-  .brand-mark{width:2.45rem;height:2.45rem}
+  .brand-mark-img{width:2.45rem;height:2.45rem}
   .brand-lockup strong{max-width:56vw;font-size:.86rem}
   .hero-copy h1{font-size:clamp(2.45rem,10.7vw,3.75rem)}
   .hero-lede{font-size:1.04rem}
