@@ -45,12 +45,43 @@ cp skins/neon-ghost.yaml ~/.hermes/skins/
 
 ## Repository Contents
 
-- `skins/`, 50 ready-to-use YAML skin files
+- `skins/`, 50 ready-to-use YAML skin files (+ `agentropolis-obsidian`, the
+  HERMES // AGENTROPOLIS flagship cyber command-center skin)
+- `cyber-tui/`, the Cyber TUI — an actual interactive Hermes TUI shell with a
+  cyberpunk mission-control presentation (React/Ink, real gateway data)
+- `installer/`, safe install/uninstall for the Cyber TUI + skin
+- `docs/`, Cyber TUI architecture + compatibility documentation
 - `README.md`, installation and skin list
 - `VERSION`, current pack version
 - `hermes_50_skins_pack.md`, browsable catalog with every full YAML block
 
 Every skin defines the complete current Hermes palette, including syntax colors and `shell_dollar`, so it does not silently inherit the default theme.
+
+## Cyber TUI (HERMES // AGENTROPOLIS)
+
+The Cyber TUI is the visual/runtime customization layer for Hermes: the real
+Hermes conversation/transcript/input stays in the center, wrapped in a
+cyberpunk command-center interface with MISSION / TASKS / AGENTS / SYSTEM /
+APPROVALS / ACTIVITY / RECEIPTS panels. It uses the documented
+`HERMES_TUI_DIR` custom-TUI mechanism and binds real gateway events — no
+fabricated telemetry.
+
+```bash
+cd cyber-tui
+npm install
+npm run build          # dist/entry.js
+export HERMES_TUI_DIR="$PWD"
+hermes --tui
+```
+
+Or use the installer:
+
+```bash
+bash installer/install.sh       # builds, backs up, installs, sets HERMES_TUI_DIR
+bash installer/uninstall.sh     # reverts
+```
+
+See `docs/CYBER_TUI_ARCHITECTURE.md` and `docs/CYBER_TUI_COMPATIBILITY.md`.
 
 ## License
 
