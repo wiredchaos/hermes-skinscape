@@ -1,0 +1,23 @@
+# Node (cyber-tui)
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment files (never commit)
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Archives
+*.tar
+*.tar.gz
+*.zip
