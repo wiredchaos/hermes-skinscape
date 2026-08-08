@@ -300,7 +300,11 @@ export class GatewayClient extends EventEmitter {
     return this.request<SessionCreateResponse>('session.create', { cols })
   }
 
-  submit(text: string): Promise<RpcOutcome<unknown>> {
-    return this.request('prompt.submit', { text })
+  submit(text: string, sessionId?: string): Promise<RpcOutcome<unknown>> {
+    const params: Record<string, unknown> = { text }
+    if (sessionId) {
+      params.session_id = sessionId
+    }
+    return this.request('prompt.submit', params)
   }
 }

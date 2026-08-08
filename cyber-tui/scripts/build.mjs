@@ -67,4 +67,34 @@ await build({
   banner: { js: banner }
 })
 
-console.log('cyber-tui: built dist/preview-render.js')
+// Optional: build the interactive canary harness (real send/stream/tool cycle).
+await build({
+  entryPoints: [resolve(root, '..', 'scripts', 'canary-interactive.mjs')],
+  outfile: resolve(outdir, 'canary-interactive.js'),
+  bundle: true,
+  platform: 'node',
+  target: 'node18',
+  format: 'esm',
+  sourcemap: false,
+  minify: false,
+  alias,
+  banner: { js: banner }
+})
+
+console.log('cyber-tui: built dist/canary-interactive.js')
+
+// Optional: build the session-resume canary harness.
+await build({
+  entryPoints: [resolve(root, '..', 'scripts', 'resume-canary.mjs')],
+  outfile: resolve(outdir, 'resume-canary.js'),
+  bundle: true,
+  platform: 'node',
+  target: 'node18',
+  format: 'esm',
+  sourcemap: false,
+  minify: false,
+  alias,
+  banner: { js: banner }
+})
+
+console.log('cyber-tui: built dist/resume-canary.js')

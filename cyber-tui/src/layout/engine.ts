@@ -112,3 +112,28 @@ export function panelsForLayout(decision: LayoutDecision): { left: PanelKey[]; r
     right: ['system', 'approvals', 'activity']
   }
 }
+
+/** All visible panels for a decision, left rail then right rail. */
+export function visiblePanelsFor(decision: LayoutDecision): PanelKey[] {
+  const { left, right } = panelsForLayout(decision)
+  return [...left, ...right]
+}
+
+/**
+ * Next focused panel when cycling with Tab. Pure + deterministic:
+ * null (no focus) -> first visible panel; otherwise wrap around.
+ * Empty visible set -> null (no focusable panels).
+ */
+export function nextFocusedPanel(visible: readonly PanelKey[], current: PanelKey | null): PanelKey | null {
+  if (visible.length === 0) {
+    return null
+  }
+  if (current === null) {
+    return visible[0]
+  }
+  const idx = visible.indexOf(current)
+  if (idx === -1) {
+    return visible[0]
+  }
+  return visible[(idx + 1) % visible.length]
+}

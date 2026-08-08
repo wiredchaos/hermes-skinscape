@@ -4,7 +4,9 @@ import {
   breakpointForWidth,
   columnBudget,
   decideLayout,
+  nextFocusedPanel,
   panelsForLayout,
+  visiblePanelsFor,
   type LayoutProfile
 } from '../src/layout/engine.js'
 
@@ -95,5 +97,46 @@ describe('column budget', () => {
     const b = columnBudget(200)
     expect(b.center).toBeGreaterThan(b.left)
     expect(b.center).toBeGreaterThan(b.right)
+  })
+})
+
+describe('focused panel cycling (visual-state logic)', () => {
+  const visible = ['mission', 'tasks', 'agents', 'system', 'approvals', 'activity', 'receipts'] as const
+
+  it('null focus selects the first visible panel', () => {
+    expect(nextFocusedPanel(visible, null)).toBe('mission')
+  })
+
+  it('wraps around to the first panel after the last', () => {
+    expect(nextFocusedPanel(visible, 'receipts')).toBe('mission')
+  })
+
+  it('advances through the visible order', () => {
+    expect(nextFocusedPanel(visible, 'mission')).toBe('tasks')
+    expect(nextFocusedPanel(visible, 'system')).toBe('approvals')
+  })
+
+  it('unknown current focus snaps to the first panel', () => {
+    expect(nextFocusedPanel(visible, 'not-a-panel' as never)).toBe('mission')
+  })
+
+  it('empty visible set stays null (no focusable panels)', () => {
+    expect(nextFocusedPanel([], null)).toBeNull()
+    expect(nextFocusedPanel([], 'mission' as never)).toBeNull()
+  })
+
+  it('focus mode exposes no panels', () => {
+    const d = decideLayout(200, 'focus')
+    expect(visiblePanelsFor(d)).toEqual([])
+  })
+
+  it('wide command center exposes all seven panels', () => {
+    const d = decideLayout(200, 'command-center')
+    expect(visiblePanelsFor(d)).toEqual(['mission', 'tasks', 'agents', 'system', 'approvals', 'activity', 'receipts'])
+  })
+
+  it('compact command center exposes only the operational rail', () => {
+    const d = decideLayout(100, 'command-center')
+    expect(visiblePanelsFor(d)).toEqual(['system', 'approvals', 'activity'])
   })
 })

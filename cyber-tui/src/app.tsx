@@ -37,6 +37,7 @@ export function CyberApp(): React.JSX.Element {
   const [bootError, setBootError] = useState<string | null>(null)
   const [bootPhase, setBootPhase] = useState('loading theme…')
   const gwRef = useRef<GatewayClient | null>(null)
+  const sessionIdRef = useRef<string>('')
   const [profile, setProfile] = useState<LayoutProfile>('command-center')
 
   useEffect(() => {
@@ -88,15 +89,29 @@ export function CyberApp(): React.JSX.Element {
       }
       setBootPhase('resuming session…')
 
-      const recent = await gw.mostRecent()
+      // HERMES_CYBER_TUI_NEW_SESSION=1 starts a fresh session instead of
+      // auto-resuming the most recent one (mirrors upstream start_new_session).
+      // HERMES_CYBER_TUI_RESUME_SESSION=<stored_session_id> resumes THAT
+      // specific session instead of the most recent one (mirrors `hermes
+      // --resume <id>`), which keeps tests from hijacking the live session.
+      const forceNew = process.env.HERMES_CYBER_TUI_NEW_SESSION === '1'
+      const resumeTarget = process.env.HERMES_CYBER_TUI_RESUME_SESSION || ''
       let resume: Awaited<ReturnType<GatewayClient['resume']>> | null = null
-      if (recent.ok && recent.value?.session_id) {
-        resume = await gw.resume(recent.value.session_id, 120)
+      if (resumeTarget) {
+        resume = await gw.resume(resumeTarget, 120)
+      } else if (!forceNew) {
+        const recent = await gw.mostRecent()
+        if (recent.ok && recent.value?.session_id) {
+          resume = await gw.resume(recent.value.session_id, 120)
+        }
       }
       if (!resume || !resume.ok) {
         const created = await gw.create(120)
         if (created.ok && created.value?.info) {
           dispatch({ type: 'session', ready: true })
+          // prompt.submit binds to the WORKING session_id from the create
+          // response; stored_session_id is display-only (server.py:5177).
+          sessionIdRef.current = created.value.session_id || created.value.info.stored_session_id || ''
           const info = created.value.info as SessionInfoPayload
           dispatch({ type: 'event', event: { type: 'session.info', payload: info } })
           setBootPhase('READY')
@@ -108,6 +123,7 @@ export function CyberApp(): React.JSX.Element {
       }
       const r = resume.value
       dispatch({ type: 'session', ready: true })
+      sessionIdRef.current = r.session_id || r.resumed || r.info?.stored_session_id || ''
       if (r.info) {
         dispatch({ type: 'event', event: { type: 'session.info', payload: r.info as SessionInfoPayload } })
       }
@@ -125,7 +141,9 @@ export function CyberApp(): React.JSX.Element {
   }, [palette])
 
   const handleCommand = (text: string): void => {
-    void gwRef.current?.submit(text)
+    // prompt.submit requires the WORKING session_id (methods_prompt.py:71);
+    // the display stored_session_id does not map to the active slot.
+    void gwRef.current?.submit(text, sessionIdRef.current || undefined)
   }
 
   if (!palette) {

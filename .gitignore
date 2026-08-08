@@ -17,6 +17,9 @@ venv/
 .DS_Store
 Thumbs.db
 
+# Runtime artifacts created by a gateway hook during canary runs
+.hardproof/
+
 # Archives
 *.tar
 *.tar.gz

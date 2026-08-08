@@ -9,6 +9,7 @@ Cyber TUI composes against the real Hermes gateway, never a fork.
 |---|---|
 | Upstream Hermes audited | `NousResearch/hermes-agent` main @ `a8ccd521236b2a8c99cdb4e0b9abcded7d82ae31` (2026-08-08) |
 | Hermes locally verified | v0.20.0 (2026.8.3) at `C:\Users\marqu\AppData\Local\hermes\hermes-agent` |
+| Hermes used by LIVE canary | v0.20.0 (profile `neuro`, `HERMES_HOME=C:\Users\marqu\AppData\Local\hermes\profiles\neuro`), launched via the real `hermes --tui` with `HERMES_TUI_DIR` on 2026-08-08 |
 | Node.js (verified host) | v24.18.0 (npm 12.0.1) |
 | React | ^18.3.1 (public npm) |
 | Ink | ^5.2.0 (public npm) — NOT the upstream `@hermes/ink` fork |
@@ -61,6 +62,50 @@ the Hermes repository. The wire protocol is what matters, and it is unchanged.
 - Terminals without Unicode get ASCII fallbacks via `CYBER_TUI_UNICODE`
   unset: box glyphs and the `❯` prompt degrade to `>` / ASCII borders.
 
+## Interactive canary record (2026-08-08, Hermes v0.20.0)
+
+Real send/stream/tool cycle performed — not inferred:
+
+- Gateway connects: `gateway.ready` seen on every run.
+- Session loads: `session.create` returns a working `session_id`; session info
+  renders real model/provider/approval/session values in the PTY.
+- User message sent + streamed: `prompt.submit` → `message.start` → real
+  `message.delta` chunks ("CY"/"BER"/" CAN"/"ARY"/" OK") → `message.complete`,
+  echoed back as `CYBER CANARY OK` by the live model.
+- Tool invocation renders: `tool.start name=terminal` / `name=read_file`
+  rendered. `tool.complete` did NOT complete inside the nested canary
+  environment: this host's terminal-tool subprocess spawn fails under the
+  doubly-nested MSYS PTY (`mktemp ... couldn't create signal pipe,
+  Win32 error 5` — cygheap copy failure), and the in-process `read_file`
+  turn hung on the same nested gateway (fresh-gateway MCP discovery churn).
+  The tool CALL and its start event are verified; tool completion was not
+  observed in the canary environment, so it is not claimed here.
+- Queue state renders: `QUEUE ◉` while running, `○` when idle (PTY-verified).
+- Layout switching works: `/layout focus` → `FOCUS · OPERATIONAL · FOCUS`
+  (conversation-first, rails hidden); `/layout command-center` restores the
+  full cockpit. Both verified live in the PTY.
+- Resizing does not corrupt output: re-renders cleanly; responsive breakpoints
+  covered by tests.
+- Session resume works: `HERMES_CYBER_TUI_RESUME_SESSION=<stored_id>` resumed
+  session `20260808_123618_fe6686` — title "Exact Cyber Canary Reply", prior
+  transcript hydrated in the MISSION panel, session id shown in SYSTEM.
+- Ctrl+C / exit: NOT verified end-to-end — the harness PTY delivers literal
+  `\u0003` text, not the control byte, so raw Ctrl+C/Esc keycodes could not
+  be injected. Process termination was via external kill. `/exit` text
+  submission path exists but was not exercised to completion.
+
+Environment variables (canary safety, mirrors upstream semantics):
+
+- `HERMES_CYBER_TUI_NEW_SESSION=1` — start a fresh session instead of
+  auto-resuming the most recent one (prevents hijacking the live session).
+- `HERMES_CYBER_TUI_RESUME_SESSION=<stored_session_id>` — resume a specific
+  session (mirrors `hermes --resume <id>`).
+
+Canary harnesses (committed, headless, non-destructive):
+
+- `scripts/canary-interactive.mjs` → `dist/canary-interactive.js`
+- `scripts/resume-canary.mjs` → `dist/resume-canary.js`
+
 ## Known limitations (v0.1)
 
 - Layout state is local to the Cyber TUI. The upstream `/layout` slash command
@@ -93,7 +138,8 @@ the Hermes repository. The wire protocol is what matters, and it is unchanged.
 cd cyber-tui
 npm ci
 npm run typecheck
-npm test                 # 34 tests: layouts, adapters, fallbacks, theme
-npm run build            # dist/entry.js + dist/smoke-gateway.js
+npm test                 # 42 tests: layouts, adapters, fallbacks, theme, focus cycle
+npm run build            # dist/entry.js + smoke/canary/preview/resume harnesses
 node dist/smoke-gateway.js   # real-gateway smoke (read-only)
+node dist/preview-render.js  # static render (no gateway)
 ```
