@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HERMES // AGENTROPOLIS — Cyber TUI. Skins, layouts, and the interactive Hermes frontend.">
+  <title>HERMES // AGENTROPOLIS — Cyber TUI</title>
+  <style>
+    :root{
+      --bg:#05080D; --surface:#08111B; --surface-alt:#0B1622;
+      --cyan:#38C7FF; --blue:#168CFF; --red:#FF4058; --magenta:#FF2E88;
+      --text:#DCE9F5; --text2:#9DB4C8; --muted:#5B7891;
+      --ok:#34E2A4; --warn:#FFB454; --sel:#102D42;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Cascadia Code",ui-monospace,Menlo,Consolas,monospace}
+    main{width:min(1080px,calc(100% - 2rem));margin:0 auto;padding:2rem 0 4rem}
+    header{border:1px solid var(--sel);border-radius:.6rem;background:linear-gradient(180deg,var(--surface),var(--bg));padding:1.2rem 1.4rem;margin-bottom:1.4rem}
+    h1{margin:.2rem 0;color:var(--cyan);letter-spacing:.08em}
+    h1 b{color:var(--red);font-weight:700}
+    .eyebrow{color:var(--magenta);font-size:.72rem;letter-spacing:.22em}
+    nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.4rem}
+    nav a{color:var(--text2);text-decoration:none;border:1px solid var(--sel);border-radius:.35rem;padding:.35rem .7rem;font-size:.8rem}
+    nav a:hover{color:var(--bg);background:var(--cyan);border-color:var(--cyan)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+    .card{border:1px solid var(--sel);border-radius:.6rem;background:var(--surface);padding:1rem}
+    .card h2{margin:.2rem 0 .6rem;color:var(--cyan);font-size:1rem}
+    .card p{margin:.3rem 0;color:var(--text2);font-size:.85rem;line-height:1.5}
+    .tag{display:inline-block;font-size:.68rem;letter-spacing:.14em;padding:.15rem .5rem;border-radius:.3rem;margin-bottom:.6rem}
+    .tag.skin{background:var(--surface-alt);color:var(--magenta);border:1px solid var(--magenta)}
+    .tag.layout{background:var(--surface-alt);color:var(--ok);border:1px solid var(--ok)}
+    .tag.tui{background:var(--surface-alt);color:var(--cyan);border:1px solid var(--cyan)}
+    .swatches{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.8rem}
+    .sw{width:2rem;height:2rem;border-radius:.35rem;border:1px solid rgba(220,233,245,.18)}
+    pre.mock{border:1px solid var(--sel);border-radius:.6rem;background:var(--surface-alt);padding:1rem;color:var(--text2);font-size:.78rem;line-height:1.45;overflow-x:auto;margin-top:1.4rem}
+    .k{color:var(--cyan)} .r{color:var(--red)} .m{color:var(--muted)}
+    footer{margin-top:2rem;color:var(--muted);font-size:.75rem;text-align:center}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">HERMES SKINSCAPE — VISUAL / RUNTIME CUSTOMIZATION LAYER</p>
+    <h1>HERMES <b>//</b> AGENTROPOLIS — CYBER TUI</h1>
+    <p style="color:var(--text2)">A cyberpunk mission-control terminal experience for Hermes Agent. The real Hermes runtime stays untouched; the terminal presentation becomes a command center.</p>
+  </header>
+
+  <nav>
+    <a href="#skins">SKINS</a>
+    <a href="#layouts">LAYOUTS</a>
+    <a href="#cyber-tui">CYBER TUI</a>
+    <a href="#preview">LIVE PREVIEW</a>
+    <a href="#install">INSTALL</a>
+    <a href="#docs">DOCS</a>
+  </nav>
+
+  <section class="grid">
+    <article class="card" id="skins">
+      <span class="tag skin">SKIN</span>
+      <h2>Visual colors / branding</h2>
+      <p>A Hermes skin is one YAML file that themes the CLI, TUI, and desktop — colors, branding, spinner. <code>agentropolis-obsidian.yaml</code> is the flagship: obsidian surfaces, cyan structure, red ops.</p>
+      <div class="swatches">
+        <div class="sw" style="background:#05080D" title="#05080D"></div>
+        <div class="sw" style="background:#08111B" title="#08111B"></div>
+        <div class="sw" style="background:#38C7FF" title="#38C7FF"></div>
+        <div class="sw" style="background:#168CFF" title="#168CFF"></div>
+        <div class="sw" style="background:#FF4058" title="#FF4058"></div>
+        <div class="sw" style="background:#FF2E88" title="#FF2E88"></div>
+        <div class="sw" style="background:#34E2A4" title="#34E2A4"></div>
+      </div>
+    </article>
+
+    <article class="card" id="layouts">
+      <span class="tag layout">LAYOUT</span>
+      <h2>Terminal composition</h2>
+      <p>Layout profiles control how the terminal is composed: <b>command-center</b> (multi-panel mission control) or <b>focus</b> (conversation-first). Responsive breakpoints adapt to terminal width — no broken borders.</p>
+    </article>
+
+    <article class="card" id="cyber-tui">
+      <span class="tag tui">CYBER TUI</span>
+      <h2>Interactive Hermes frontend</h2>
+      <p>An actual Hermes TUI shell: the real conversation/transcript/input stays center-stage, wrapped in MISSION / TASKS / AGENTS / SYSTEM / APPROVALS / ACTIVITY / RECEIPTS panels. Real gateway events only — no fabricated telemetry.</p>
+    </article>
+  </section>
+
+  <section class="card" id="preview">
+    <h2>Terminal preview (conceptual layout)</h2>
+    <pre class="mock"><span class="k">┌───────────────────────────────────────────────────────────────┐
+│ HERMES // AGENTROPOLIS                                       │
+│ RUNTIME │ SESSION │ MODEL │ AGENTS │ QUEUE │ SYSTEM STATE    │
+├───────────────┬─────────────────────────────┬─────────────────┤
+│ MISSION       │                             │ SYSTEM          │
+│ TASKS         │       HERMES LIVE           │ APPROVALS       │
+│ AGENTS        │  conversation + tools       │ ACTIVITY        │
+│               │                             │ RECEIPTS        │
+├───────────────┴─────────────────────────────┴─────────────────┤
+│ HERMES COMMAND > _                                           │
+└───────────────────────────────────────────────────────────────┘</span></pre>
+  </section>
+
+  <section class="card" id="install">
+    <h2>Install</h2>
+    <pre class="mock"><span class="k">bash installer/install.sh</span>       <span class="m"># builds, backs up, installs, sets HERMES_TUI_DIR</span>
+<span class="k">export HERMES_TUI_DIR=~/.hermes/cyber-tui
+hermes --tui</span>
+<span class="m"># revert anytime:
+</span><span class="k">bash installer/uninstall.sh</span></pre>
+  </section>
+
+  <section class="card" id="docs">
+    <h2>Docs</h2>
+    <p><span class="r">▸</span> <a href="../docs/CYBER_TUI_ARCHITECTURE.md" style="color:var(--cyan)">docs/CYBER_TUI_ARCHITECTURE.md</a> — the discovered integration contract</p>
+    <p><span class="r">▸</span> <a href="../docs/CYBER_TUI_COMPATIBILITY.md" style="color:var(--cyan)">docs/CYBER_TUI_COMPATIBILITY.md</a> — versions, protocol assumptions, limitations</p>
+  </section>
+
+  <footer>HERMES // AGENTROPOLIS — Cyber TUI v0.1 · Skins, Layouts, and the interactive Hermes frontend</footer>
+</main>
+</body>
+</html>
