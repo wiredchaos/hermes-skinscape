@@ -43,23 +43,28 @@ function HeaderStrip({ state, palette, cols }: { state: CyberState; palette: Cyb
   const model = s.model || 'NO PROVIDER'
   const provider = s.provider || '—'
   const session = s.sessionId ? s.sessionId.slice(0, 8) : '—'
-  const approval = s.yolo ? 'YOLO' : s.approvalMode || 'manual'
   const bp = breakpointLabel(cols)
 
   return (
     <Box width={cols} justifyContent="space-between" borderStyle="round" borderColor={palette.border} paddingX={1}>
-      <Text bold color={palette.cyan}>
-        HERMES <Text color={palette.red}>//</Text> AGENTROPOLIS
-      </Text>
-      <Text color={palette.muted}>
-        RUNTIME <Text color={palette.textSecondary}>{state.sessionReady ? 'LIVE' : 'BOOT'}</Text>
-        {'  '}SESSION <Text color={palette.textSecondary}>{session}</Text>
-        {'  '}MODEL <Text color={palette.textSecondary}>{model}</Text>
-        {'  '}AGENTS <Text color={palette.textSecondary}>{state.agents.agents.length}</Text>
-        {'  '}QUEUE <Text color={palette.textSecondary}>{state.activity.streaming ? '◉' : '—'}</Text>
-        {'  '}STATE <Text color={palette.textSecondary}>{bp}</Text>
-      </Text>
-      <ActivityPulse active={state.system.running || state.activity.streaming} palette={palette} />
+      <Box flexShrink={0}>
+        <Text bold color={palette.cyan}>
+          HERMES <Text color={palette.red}>//</Text> AGENTROPOLIS
+        </Text>
+      </Box>
+      <Box flexShrink={1} width="auto">
+        <Text color={palette.muted} wrap="truncate">
+          RUNTIME <Text color={palette.textSecondary}>{state.sessionReady ? 'LIVE' : 'BOOT'}</Text>
+          {'  '}SESSION <Text color={palette.textSecondary}>{session}</Text>
+          {'  '}MODEL <Text color={palette.textSecondary}>{model}</Text>
+          {'  '}AGENTS <Text color={palette.textSecondary}>{state.agents.agents.length}</Text>
+          {'  '}QUEUE <Text color={palette.textSecondary}>{state.activity.streaming ? '◉' : '—'}</Text>
+          {'  '}STATE <Text color={palette.textSecondary}>{bp}</Text>
+        </Text>
+      </Box>
+      <Box flexShrink={0}>
+        <ActivityPulse active={state.system.running || state.activity.streaming} palette={palette} />
+      </Box>
     </Box>
   )
 }
