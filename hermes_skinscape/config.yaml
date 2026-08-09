@@ -1,0 +1,24 @@
+name: Hermes Skinscape Bridge
+version: "0.2.0"
+slug: hermes_skinscape_bridge
+description: Publish and display Hermes animated ASCII media inside Home Assistant.
+url: https://github.com/wiredchaos/hermes-skinscape
+arch:
+  - aarch64
+  - amd64
+startup: application
+boot: auto
+init: false
+ingress: true
+ingress_port: 8099
+ingress_stream: true
+panel_icon: mdi:movie-filter
+panel_title: Skinscape
+options:
+  autoplay: true
+  loop: true
+  muted: true
+schema:
+  autoplay: bool
+  loop: bool
+  muted: bool
