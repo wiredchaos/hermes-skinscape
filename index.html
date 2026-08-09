@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Turn the original 50 Hermes skins into rotating Agentropolis terminal worlds and generate a branded ASCII identity from an image or URL.">
+  <title>Hermes Skinscape</title>
+  <link rel="icon" type="image/png" href="assets/branding/favicon.png">
+  <link rel="stylesheet" href="./web/styles.css">
+  <link rel="stylesheet" href="./web/3d/city.css">
+  <link rel="stylesheet" href="./web/onboarding.css">
+  <link rel="stylesheet" href="./web/hybrid.css">
+</head>
+<body>
+  <div class="city-stage" aria-hidden="true">
+    <canvas id="agentropolisCanvas"></canvas>
+    <div id="cityFallback" class="city-fallback" hidden>
+      <div class="fallback-grid"></div>
+    </div>
+    <div class="city-vignette"></div>
+  </div>
+
+  <header class="site-header command-header">
+    <a class="brand-lockup" href="#top" aria-label="AGENTROPOLIS HERMES SKINSCAPE home">
+      <img class="brand-mark-img" src="assets/branding/hermes-skinscape-mark.png" alt="AGENTROPOLIS HERMES SKINSCAPE mark" width="48" height="48">
+      <img class="brand-logo-img" src="assets/branding/agentropolis-hermes-skinscape-logo.png" alt="AGENTROPOLIS HERMES SKINSCAPE wordmark">
+      <span class="sr-only"><strong>AGENTROPOLIS</strong><b>HERMES SKINSCAPE</b></span>
+    </a>
+
+    <nav class="command-nav" aria-label="Primary navigation">
+      <a href="#quickStart">START</a>
+      <a href="#forge">FORGE</a>
+      <a href="#worlds">WORLDS</a>
+      <a href="#exports">EXPORT</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="header-guide-actions" aria-label="Help and onboarding">
+        <button id="openQuickStart" class="nav-cta" type="button">START HERE</button>
+        <button id="startTourSecondary" class="icon-button" type="button" aria-label="Start guided tour">?</button>
+        <button id="openExplainer" class="icon-button" type="button" aria-label="Open explainer">▶</button>
+      </div>
+      <div class="city-controls" aria-label="3D city controls">
+        <label>
+          City quality
+          <select id="cityQuality">
+            <option value="auto">Auto</option>
+            <option value="cinematic">Cinematic</option>
+            <option value="balanced">Balanced</option>
+            <option value="low">Low power</option>
+          </select>
+        </label>
+        <label class="city-switch">
+          <input id="cityMotion" type="checkbox" checked>
+          Motion
+        </label>
+      </div>
+      <output id="cityStatus" class="city-status" aria-live="polite">City offline</output>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero-command" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">AGENTROPOLIS · HERMES CITY</p>
+        <h1 id="hero-title">Your identity.<br><span>Fifty worlds.</span><br>One living terminal city.</h1>
+        <p class="hero-lede">Upload a PFP, turn it into colorized ASCII, preserve your brand, and deploy it across every Hermes skin inside the Agentropolis Intelligence Grid.</p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#forge">✦ Generate identity</a>
+          <a class="secondary-action" href="#worlds">Explore 50 worlds</a>
+        </div>
+      </div>
+
+      <div class="hero-command-card" aria-label="Skinscape status">
+        <div class="hero-command-topline">
+          <span>SKINSCAPE OS</span>
+          <span class="status-live">● ONLINE</span>
+        </div>
+        <div class="hero-command-grid">
+          <article><strong>50</strong><span>world skins</span></article>
+          <article><strong>1</strong><span>persistent identity</span></article>
+          <article><strong>LOCAL</strong><span>image processing</span></article>
+          <article><strong>3D</strong><span>city renderer</span></article>
+        </div>
+        <p>Infrastructure becomes the terrain others must build on.</p>
+      </div>
+    </section>
+
+    <section id="quickStart" class="quick-start glass-panel command-card" aria-labelledby="quick-start-title">
+      <div class="quick-start-copy">
+        <p class="eyebrow">START HERE</p>
+        <h2 id="quick-start-title">Build your identity in three moves.</h2>
+        <p>You do not need to configure Hermes first. Make a preview, rotate the worlds, then export the result you want to keep.</p>
+        <div class="quick-start-actions">
+          <button id="startTour" class="primary-action button-reset" type="button">Guide me through it</button>
+          <button type="button" id="openExplainerInline" class="secondary-action button-reset">Open explainer</button>
+        </div>
+      </div>
+      <div class="quick-start-grid">
+        <article class="quick-step">
+          <span class="quick-step-number">1</span>
+          <h3>Add an identity</h3>
+          <p>Upload a PFP or logo, or paste a public GitHub profile URL.</p>
+        </article>
+        <article class="quick-step">
+          <span class="quick-step-number">2</span>
+          <h3>Preview the worlds</h3>
+          <p>Check your ASCII portrait, then rotate through all 50 Hermes skins.</p>
+        </article>
+        <article class="quick-step">
+          <span class="quick-step-number">3</span>
+          <h3>Export your result</h3>
+          <p>Download a profile JSON, ASCII text, or standalone HTML preview.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="forge" class="controls glass-panel command-card" data-tour="identity" aria-labelledby="build-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">IDENTITY FORGE</p>
+          <h2 id="build-title">Pick a theme. Build the identity.</h2>
+          <p>Choose how much control your profile keeps while the worlds rotate.</p>
+        </div>
+        <output id="status" aria-live="polite">Starting...</output>
+      </div>
+
+      <div class="theme-mode-picker" role="group" aria-label="Theme behavior">
+        <button id="themeCustom" class="theme-pill is-active" type="button" data-brand-mode="protected" aria-pressed="true">🛠 Custom</button>
+        <button id="themeStandard" class="theme-pill" type="button" data-brand-mode="unrestricted" aria-pressed="false">◈ Standard</button>
+      </div>
+
+      <div class="identity-card-preview">
+        <p class="identity-card-label">ACTIVE IDENTITY</p>
+        <h3 id="identityCardName">HERMES IDENTITY</h3>
+        <p>Your brand stays recognizable while the city, terminal palette, and atmosphere transform around it.</p>
+      </div>
+
+      <div class="control-grid">
+        <label>
+          Upload PFP or logo
+          <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+          <span class="field-hint">Best results: square PNG, JPG, or WebP under 8 MB.</span>
+        </label>
+        <label>
+          Image or GitHub profile URL
+          <span class="input-row"><input id="imageUrl" type="url" placeholder="https://github.com/username"><button id="loadUrl" type="button">Load</button></span>
+          <span class="field-hint">A GitHub profile URL is converted to its public avatar automatically.</span>
+        </label>
+        <label>
+          Brand name
+          <input id="brandName" type="text" value="HERMES IDENTITY" maxlength="48">
+          <span class="field-hint">This becomes the identity name shown in the terminal and exports.</span>
+        </label>
+        <label>
+          Brand behavior
+          <select id="brandMode">
+            <option value="extracted">Extract colors from image</option>
+            <option value="custom">Use my colors</option>
+            <option value="protected">Protect my colors while worlds rotate</option>
+            <option value="unrestricted">Let every skin recolor everything</option>
+          </select>
+          <span class="field-hint">Protected keeps your identity colors stable while the surrounding city changes.</span>
+        </label>
+      </div>
+
+      <div class="color-row">
+        <label>Primary <input id="primaryColor" type="color" value="#25d9ff"></label>
+        <label>Secondary <input id="secondaryColor" type="color" value="#ff3b81"></label>
+        <label>Accent <input id="accentColor" type="color" value="#63e67b"></label>
+        <label>ASCII width <input id="asciiWidth" type="range" min="24" max="96" value="52"><span id="asciiWidthValue">52</span></label>
+      </div>
+      <details class="inline-hint">
+        <summary>Which brand behavior should I choose?</summary>
+        <p>Choose <strong>Extracted</strong> for automatic image colors, <strong>Custom</strong> to select your own, <strong>Protected</strong> to preserve your brand during rotation, or <strong>Unrestricted</strong> for the strongest world transformations.</p>
+      </details>
+
+      <button id="generateIdentity" class="generate-action" type="button">✦ Generate</button>
+    </section>
+
+    <section class="terminal-shell command-card" data-tour="preview" aria-label="Hermes terminal preview">
+      <div class="terminal-topbar">
+        <div><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div><strong id="skinName">loading</strong> <span id="skinCounter">0 / 50</span></div>
+        <span id="skinDescription">Loading skin library</span>
+      </div>
+      <div class="terminal-banner">
+        <p class="terminal-logo">HERMES<br>SKINSCAPE</p>
+        <div>
+          <h2 id="terminalBrand">HERMES IDENTITY</h2>
+          <p>50 SKINS · ASCII IDENTITY · AGENTROPOLIS CITY GRID</p>
+        </div>
+      </div>
+      <div class="terminal-content">
+        <div class="portrait-panel">
+          <img id="avatarPreview" alt="Uploaded identity preview" hidden>
+          <pre id="asciiPortrait" aria-label="Generated ASCII portrait">UPLOAD A PFP
+OR PASTE AN HTTPS URL
+TO GENERATE YOUR ASCII IDENTITY.</pre>
+        </div>
+        <div class="telemetry">
+          <p><strong>Hermes Agent</strong> city terminal</p>
+          <p class="accent">▾ Grid Status</p>
+          <p>Identity forge online · city renderer active · themes synchronized</p>
+          <p class="accent">▸ Available Skills</p>
+          <p>Identity forge · skin rotation · profile export · city projection</p>
+          <p class="accent">▸ MCP Servers</p>
+          <p>Connection status remains owned by the local Hermes runtime.</p>
+          <p class="signal">THEMES CONTROL THE WORLD. PROFILE CONTROLS THE IDENTITY.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="worlds" class="screensaver glass-panel command-card" data-tour="worlds" aria-labelledby="screensaver-title">
+      <div>
+        <p class="eyebrow">CITY ROTATION</p>
+        <h2 id="screensaver-title">All 50 worlds</h2>
+        <p>The city changes atmosphere. Your identity stays recognizable.</p>
+      </div>
+      <div class="transport">
+        <button id="previous" type="button">Previous</button>
+        <button id="playPause" class="primary-action button-reset" type="button">Play</button>
+        <button id="next" type="button">Next</button>
+        <label>Seconds <input id="interval" type="number" min="2" max="300" value="15"></label>
+        <label class="check"><input id="shuffle" type="checkbox"> Shuffle</label>
+      </div>
+    </section>
+
+    <section id="exports" class="export-panel glass-panel command-card" data-tour="export" aria-labelledby="export-title">
+      <div>
+        <p class="eyebrow">EXPORT</p>
+        <h2 id="export-title">Keep what you make</h2>
+        <p>Exports download locally. They do not overwrite your Hermes configuration.</p>
+      </div>
+      <div class="transport">
+        <button id="exportProfile" type="button">Profile JSON</button>
+        <button id="exportAscii" type="button">ASCII TXT</button>
+        <button id="exportHtml" type="button">Standalone HTML</button>
+      </div>
+    </section>
+  </main>
+
+  <button id="floatingHelp" class="floating-help" type="button" aria-label="Open quick start help">?</button>
+
+  <dialog id="explainerDialog" class="explainer-dialog" aria-labelledby="explainerTitle">
+    <div class="explainer-header">
+      <div>
+        <p class="eyebrow">EXPLAINER</p>
+        <h2 id="explainerTitle">How Hermes Skinscape Works</h2>
+      </div>
+      <button id="closeExplainer" class="explainer-close" type="button">Close</button>
+    </div>
+    <div class="explainer-body">
+      <iframe id="gammaFrame" class="gamma-frame" title="Hermes Skinscape explainer" loading="lazy" allowfullscreen hidden></iframe>
+      <div id="explainerFallback" class="explainer-fallback">
+        <p>Your Gamma can replace this built-in guide later. The site remains fully understandable without an external embed.</p>
+        <div class="explainer-steps">
+          <article class="explainer-step"><strong>1. Upload</strong><p>Add a PFP, logo, direct image URL, or public GitHub profile URL.</p></article>
+          <article class="explainer-step"><strong>2. Generate</strong><p>The browser extracts colors and produces a colorized ASCII identity locally.</p></article>
+          <article class="explainer-step"><strong>3. Rotate</strong><p>Move through all 50 Hermes skins while the Agentropolis city changes with them.</p></article>
+          <article class="explainer-step"><strong>4. Export</strong><p>Download the identity profile, ASCII text, or standalone browser preview.</p></article>
+        </div>
+        <div class="quick-start-actions">
+          <button id="startTourDialog" type="button">Start guided tour</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="tourOverlay" class="tour-overlay" hidden>
+    <section class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tourTitle">
+      <p id="tourStep" class="tour-progress">Step 1 of 5</p>
+      <h2 id="tourTitle">Start here</h2>
+      <p id="tourText">Choose an identity, preview it, rotate the worlds, and export.</p>
+      <div class="tour-actions">
+        <button id="tourClose" type="button">Exit</button>
+        <div>
+          <button id="tourPrevious" type="button">Back</button>
+          <button id="tourNext" type="button">Next</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    Original 50-skin collection by BChopLXXXII. Hermes Skinscape preserves upstream attribution. Agentropolis provides the optional city presentation layer.
+  </footer>
+  <script type="module" src="./web/app.js"></script>
+  <script type="module" src="./web/3d/bootstrap.js"></script>
+  <script type="module" src="./web/onboarding.js"></script>
+  <script type="module" src="./web/hybrid-ui.js"></script>
+</body>
+</html>

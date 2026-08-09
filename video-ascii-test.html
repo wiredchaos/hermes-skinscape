@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cache-isolated Hermes Skinscape animated ASCII video converter test page.">
+  <title>Hermes Animated ASCII Forge</title>
+  <link rel="stylesheet" href="./web/styles.css?v=fe6eff16">
+  <link rel="stylesheet" href="./web/hybrid.css?v=fe6eff16">
+  <link rel="stylesheet" href="./web/video-ascii.css?v=fe6eff16">
+  <style>
+    body{min-height:100vh;background:#0d0a32}
+    main{width:min(1180px,calc(100% - 1rem));margin:0 auto;padding:1rem 0 5rem}
+    .test-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;border:1px solid rgba(255,82,110,.35);border-radius:1rem;background:rgba(11,8,42,.9)}
+    .test-header h1{margin:0;font-size:clamp(1.2rem,4vw,2rem)}
+    .build-badge{padding:.45rem .7rem;border:1px solid #79f0b2;border-radius:999px;color:#79f0b2;font:800 .72rem/1 ui-monospace,monospace;white-space:nowrap}
+    .test-note{margin:.8rem 0 0;color:#c6c0da;line-height:1.55}
+    .ascii-source-video{position:absolute!important;left:0;top:0;width:2px!important;height:2px!important;opacity:.01!important;pointer-events:none!important}
+    #exports{display:none}
+  </style>
+</head>
+<body>
+  <main>
+    <header class="test-header">
+      <div>
+        <p class="eyebrow">HERMES SKINSCAPE</p>
+        <h1>Animated ASCII Forge</h1>
+      </div>
+      <span class="build-badge">BUILD FE6EFF16</span>
+    </header>
+    <p class="test-note">This page bypasses the cached Skinscape modules. Choose the video again. The status must say <strong>decoding first frame</strong> or <strong>playing as animated ASCII</strong>. If it says only “processed locally,” the old page is still open.</p>
+    <section id="exports" aria-hidden="true"></section>
+  </main>
+  <script type="module" src="./web/video-ascii.js?v=fe6eff16"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wiredchaos.github.io/hermes-skinscape/schemas/profile.schema.json",
+  "title": "Hermes Skinscape Profile",
+  "type": "object",
+  "required": ["version", "profile", "brand", "identity", "screensaver"],
+  "properties": {
+    "version": { "const": 1 },
+    "profile": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 }
+      },
+      "additionalProperties": true
+    },
+    "brand": {
+      "type": "object",
+      "required": ["mode", "colors"],
+      "properties": {
+        "mode": { "enum": ["extracted", "custom", "protected", "unrestricted"] },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "primary": { "$ref": "#/$defs/color" },
+            "secondary": { "$ref": "#/$defs/color" },
+            "accent": { "$ref": "#/$defs/color" },
+            "background": { "$ref": "#/$defs/color" }
+          },
+          "additionalProperties": false
+        },
+        "protected_tokens": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "identity": {
+      "type": "object",
+      "required": ["ascii_width"],
+      "properties": {
+        "ascii_width": { "type": "integer", "minimum": 16, "maximum": 160 },
+        "source_stored": { "type": "boolean", "default": false }
+      },
+      "additionalProperties": true
+    },
+    "screensaver": {
+      "type": "object",
+      "required": ["enabled", "include_all_50", "order", "interval_seconds"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "include_all_50": { "type": "boolean" },
+        "order": { "enum": ["sequential", "shuffle"] },
+        "interval_seconds": { "type": "integer", "minimum": 2, "maximum": 86400 },
+        "active_skin": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "color": { "type": ["string", "null"], "pattern": "^#[0-9a-fA-F]{6}$" }
+  },
+  "additionalProperties": true
+}

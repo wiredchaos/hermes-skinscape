@@ -1,0 +1,51 @@
+version: 1
+profile:
+  id: agentropolis-neuro
+  name: Agentropolis NEURO
+  distribution: optional-example
+
+identity:
+  source:
+    type: upload-or-url
+    value: null
+  preserve_subject: true
+  ascii:
+    width: 56
+    mode: ansi
+    background: transparent
+
+brand:
+  mode: protected
+  name: AGENTROPOLIS
+  logo: null
+  colors:
+    primary: "#ff2b2b"
+    secondary: "#00d9ff"
+    accent: "#b6ff00"
+    background: "#08090c"
+  protected_tokens:
+    - name
+    - logo
+    - colors.primary
+    - colors.secondary
+    - colors.background
+
+screensaver:
+  enabled: true
+  source: all
+  order: shuffle
+  interval_seconds: 15
+  include_all_50: true
+  playlist: []
+  idle_activation_seconds: 300
+
+exports:
+  skin_yaml: true
+  profile_yaml: true
+  ascii_text: true
+  ansi_text: true
+  preview_html: true
+
+notes:
+  - This is an optional showcase profile, not the community default.
+  - Rotating themes may transform scenes and imagery but must preserve protected brand tokens.
